@@ -110,9 +110,7 @@ CREATE TABLE trimestres (
     nombre_trimestre ENUM('1 trimestre', '2 trimestre', '3 trimestre') NOT NULL,
     lapso_anual YEAR NOT NULL,
     fecha_inicio DATE NOT NULL,
-    fecha_fin DATE NOT NULL,
-    id_curso INT NOT NULL,
-    CONSTRAINT fk_secciones_trimestres FOREIGN KEY (id_curso) REFERENCES cursos(id_curso)
+    fecha_fin DATE NOT NULL
 );
 
 CREATE TABLE tipos_asignaciones (
