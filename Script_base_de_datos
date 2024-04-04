@@ -198,7 +198,8 @@ CREATE TABLE pagos (
     id_cuota_grado INT NOT NULL,
     fecha_vencimiento DATE NOT NULL,
     fecha_pago DATE NULL,
-    estado_pago ENUM('Pendiente', 'Pagado', 'Con recargo') NOT NULL DEFAULT 'Pendiente',
+    estado_pago ENUM('Pendiente', 'Pagado') NOT NULL DEFAULT 'Pendiente',
+    estado_cargo ENUM ('Con mora', 'Sin mora') NOT NULL DEFAULT 'Sin mora',
     CONSTRAINT fk_tbestudiantes_tbpagos FOREIGN KEY (id_estudiante) REFERENCES estudiantes(id_estudiante),
     CONSTRAINT fk_tbcuotasgrado_tbpagos FOREIGN KEY (id_cuota_grado) REFERENCES cuotas_grados(id_cuota_grado)
 );
