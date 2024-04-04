@@ -189,7 +189,8 @@ CREATE TABLE cuotas_grados (
     id_cuota_grado INT PRIMARY KEY AUTO_INCREMENT,
     id_grado INT NOT NULL,
     cuota DECIMAL(5,2) NOT NULL,
-    recargo DECIMAL(5,2) NOT NULL,
+    recargo DECIMAL(5,2) NULL,
+    tipo_cuota ENUM ('Mensualidad', 'Matricula') NOT NULL,
     CONSTRAINT fk_tbgrado_tbcuotasgrado FOREIGN KEY (id_grado) REFERENCES grados(id_grado)
 );
 
