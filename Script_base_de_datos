@@ -22,6 +22,7 @@ CREATE TABLE cursos (
 
 CREATE TABLE materias (
     id_materia INT PRIMARY KEY AUTO_INCREMENT,
+    tipo_materia ENUM ('Basica','Complementaria') NOT NULL,	
     nombre_materia VARCHAR(100) NOT NULL
 );
 
