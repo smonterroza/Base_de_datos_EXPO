@@ -33,6 +33,7 @@ CREATE TABLE responsables_estudiantes (
     telefono_responsable VARCHAR (9) NOT NULL,
     direccion_responsable VARCHAR(100) NOT NULL,
     correo_responsable VARCHAR(100) NOT NULL,
+    parentesco ENUM('Padre', 'Madre', 'Otro') NOT NULL,
     CONSTRAINT CHK_telefono_responsables CHECK (telefono_responsable REGEXP '^[0-9]{8}$'),
     CONSTRAINT CHK_telefono_responsables_estudiantes CHECK (LENGTH(telefono_responsable) = 9),
     CONSTRAINT CHK_correo_responsables_estudiantes CHECK (correo_responsable REGEXP '^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$')
@@ -190,21 +191,41 @@ CREATE TABLE cuotas_grados (
     id_cuota_grado INT PRIMARY KEY AUTO_INCREMENT,
     id_grado INT NOT NULL,
     cuota DECIMAL(5,2) NOT NULL,
-    recargo DECIMAL(5,2) NULL,
-    tipo_cuota ENUM ('Mensualidad', 'Matricula') NOT NULL,
+    fecha_vencimiento DATE NOT NULL,
     CONSTRAINT fk_tbgrado_tbcuotasgrado FOREIGN KEY (id_grado) REFERENCES grados(id_grado)
 );
 
-CREATE TABLE pagos (
-    id_pago INT PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE cuotas_pagos (
+    id_cuota INT PRIMARY KEY AUTO_INCREMENT,
     id_estudiante INT NOT NULL,
     id_cuota_grado INT NOT NULL,
-    fecha_vencimiento DATE NOT NULL,
     fecha_pago DATE NULL,
     estado_pago ENUM('Pendiente', 'Pagado') NOT NULL DEFAULT 'Pendiente',
     estado_cargo ENUM ('Con mora', 'Sin mora') NOT NULL DEFAULT 'Sin mora',
-    CONSTRAINT fk_tbestudiantes_tbpagos FOREIGN KEY (id_estudiante) REFERENCES estudiantes(id_estudiante),
-    CONSTRAINT fk_tbcuotasgrado_tbpagos FOREIGN KEY (id_cuota_grado) REFERENCES cuotas_grados(id_cuota_grado)
+    CONSTRAINT fk_tbestudiantes_tbcuotaspagos FOREIGN KEY (id_estudiante) REFERENCES estudiantes(id_estudiante),
+    CONSTRAINT fk_tbcuotasgrado_tbcuotaspagos FOREIGN KEY (id_cuota_grado) REFERENCES cuotas_grados(id_cuota_grado)
+);
+
+CREATE TABLE matriculas_grados(
+    id_matricula_grado INT PRIMARY KEY AUTO_INCREMENT,
+    id_grado INT NOT NULL,
+    matricula DECIMAL(5,2) NOT NULL,
+    fecha_vencimiento DATE NOT NULL,
+    CONSTRAINT fk_tbgrado_tbmatriculasgrado FOREIGN KEY (id_grado) REFERENCES grados(id_grado)
+);
+
+CREATE TABLE matriculas_pagos(
+    id_matricula INT PRIMARY KEY AUTO_INCREMENT,
+    id_estudiante INT NOT NULL,
+    id_matricula_grado INT NOT NULL,
+    primer_pago DECIMAL(5,2) NOT NULL,
+    segundo_pago DECIMAL(5,2) NULL,
+    fecha_primer_pago DATE NOT NULL,
+    fecha_segundo_pago DATE NULL,
+    estado_pago ENUM('Pendiente', 'Pagado') NOT NULL DEFAULT 'Pendiente',
+    estado_cargo ENUM ('Con mora', 'Sin mora') NOT NULL DEFAULT 'Sin mora',
+    CONSTRAINT fk_tbestudiantes_tbmatriculaspagos FOREIGN KEY (id_estudiante) REFERENCES estudiantes(id_estudiante),
+    CONSTRAINT fk_tbmatriculasgrado_tbmatriculaspagos FOREIGN KEY (id_matricula_grado) REFERENCES matriculas_grados(id_matricula_grado)
 );
 
 CREATE TABLE tallas_uniformes (
