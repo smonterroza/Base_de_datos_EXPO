@@ -15,7 +15,7 @@ CREATE TABLE secciones (
 CREATE TABLE cursos (
     id_curso INT PRIMARY KEY AUTO_INCREMENT,
     id_grado INT NOT NULL,
-    id_seccion INT NOT NULL,
+    id_seccion INT NULL,
     CONSTRAINT fk_tbseccion_tbgrado FOREIGN KEY (id_grado) REFERENCES grados(id_grado),
     CONSTRAINT fk_tbcursos_tbseccion FOREIGN KEY (id_seccion) REFERENCES secciones(id_seccion)
 );
