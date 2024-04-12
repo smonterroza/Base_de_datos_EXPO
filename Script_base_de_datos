@@ -30,12 +30,12 @@ CREATE TABLE responsables_estudiantes (
     id_responsable INT PRIMARY KEY AUTO_INCREMENT,
     nombre_responsable VARCHAR(50) NOT NULL,
     apellido_responsable VARCHAR(50) NOT NULL,
-    telefono_responsable VARCHAR (9) UNIQUE NOT NULL,
+    telefono_responsable INT UNIQUE NOT NULL,
     direccion_responsable VARCHAR(100) NOT NULL,
     correo_responsable VARCHAR(100) UNIQUE NOT NULL,
     parentesco ENUM('Padre', 'Madre', 'Otro') NOT NULL,
     CONSTRAINT CHK_telefono_responsables CHECK (telefono_responsable REGEXP '^[0-9]{8}$'),
-    CONSTRAINT CHK_telefono_responsables_estudiantes CHECK (LENGTH(telefono_responsable) = 9),
+    CONSTRAINT CHK_telefono_responsables_estudiantes CHECK (LENGTH(telefono_responsable) = 8),
     CONSTRAINT CHK_correo_responsables_estudiantes CHECK (correo_responsable REGEXP '^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$')
 );
 
