@@ -7,7 +7,6 @@ CREATE TABLE grados (
     nombre_grado VARCHAR(10) NOT NULL UNIQUE
 );
 
-
 CREATE TABLE secciones (
     id_seccion INT PRIMARY KEY AUTO_INCREMENT, 
     nombre_seccion VARCHAR(2) NOT NULL UNIQUE 
@@ -16,52 +15,50 @@ CREATE TABLE secciones (
 CREATE TABLE cursos (
     id_curso INT PRIMARY KEY AUTO_INCREMENT,
     id_grado INT NOT NULL,
-    id_seccion INT NULL,
+    id_seccion INT NOT NULL,
     CONSTRAINT fk_tbseccion_tbgrado FOREIGN KEY (id_grado) REFERENCES grados(id_grado),
     CONSTRAINT fk_tbcursos_tbseccion FOREIGN KEY (id_seccion) REFERENCES secciones(id_seccion)
 );
 
-
 CREATE TABLE materias (
     id_materia INT PRIMARY KEY AUTO_INCREMENT,
-    tipo_materia ENUM ('Basica','Complementaria') NOT NULL,	
+    tipo_materia ENUM ('Básica','Complementaria') NOT NULL,	
     nombre_materia VARCHAR(100) NOT NULL
 );
-
 
 CREATE TABLE responsables_estudiantes (
     id_responsable INT PRIMARY KEY AUTO_INCREMENT,
     nombre_responsable VARCHAR(50) NOT NULL,
     apellido_responsable VARCHAR(50) NOT NULL,
-    telefono_responsable INT NOT NULL,
+    telefono_responsable VARCHAR (9) UNIQUE NOT NULL,
     direccion_responsable VARCHAR(100) NOT NULL,
-    correo_responsable VARCHAR(100) NOT NULL,
+    correo_responsable VARCHAR(100) UNIQUE NOT NULL,
     parentesco ENUM('Padre', 'Madre', 'Otro') NOT NULL,
-    CONSTRAINT CHK_telefono_responsables_estudiantes CHECK (LENGTH(telefono_responsable) = 8),
+    CONSTRAINT CHK_telefono_responsables CHECK (telefono_responsable REGEXP '^[0-9]{8}$'),
+    CONSTRAINT CHK_telefono_responsables_estudiantes CHECK (LENGTH(telefono_responsable) = 9),
     CONSTRAINT CHK_correo_responsables_estudiantes CHECK (correo_responsable REGEXP '^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$')
 );
 
 
- CREATE TABLE estudiantes (
-        id_estudiante INT PRIMARY KEY AUTO_INCREMENT,
-        alias_estudiante VARCHAR(20) NOT NULL,
-        nombre_estudiante VARCHAR(50) NOT NULL,
-        apellido_estudiante VARCHAR(50) NOT NULL,
-        fecha_matriculacion DATE DEFAULT NOW(),
-        fecha_nacimiento DATE NOT NULL,
-        foto_estudiante VARCHAR(80) NULL,
-        estado_estudiante ENUM('Deshabilitado', 'Habilitado') NOT NULL,
-        genero ENUM('Masculino', 'Femenino') NOT NULL,
-        horario ENUM('Matutino', 'Vespertino') NOT NULL, 
-        clave_estudiante VARCHAR(255) NOT NULL,
-        tipo_sangre ENUM('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-') NULL,
-        id_responsable INT NOT NULL,
-        id_curso INT NOT NULL,
-        CONSTRAINT fk_tbcurso_tbestudiante FOREIGN KEY (id_curso) REFERENCES cursos(id_curso),
-        CONSTRAINT fk_estudiantes_responsables FOREIGN KEY (id_responsable) REFERENCES responsables_estudiantes(id_responsable),
-        CONSTRAINT UN_alias_estudiante UNIQUE (alias_estudiante)
+CREATE TABLE estudiantes (
+    id_estudiante INT PRIMARY KEY AUTO_INCREMENT,
+    alias_estudiante VARCHAR(20) UNIQUE NOT NULL,
+    clave_estudiante VARCHAR(255) NOT NULL,
+    nombre_estudiante VARCHAR(50) NOT NULL,
+    apellido_estudiante VARCHAR(50) NOT NULL,
+    fecha_matriculacion DATE DEFAULT NOW(),
+    fecha_nacimiento DATE NOT NULL,
+    foto_estudiante VARCHAR(80) NULL,
+    estado_estudiante ENUM('Deshabilitado', 'Habilitado') NOT NULL,
+    genero ENUM('Masculino', 'Femenino') NOT NULL,
+    horario ENUM('Matutino', 'Vespertino') NOT NULL, 
+    tipo_sangre VARCHAR(30) NULL,
+    id_responsable INT NOT NULL,
+    id_curso INT NOT NULL,
+    CONSTRAINT fk_tbcurso_tbestudiante FOREIGN KEY (id_curso) REFERENCES cursos(id_curso),
+    CONSTRAINT fk_estudiantes_responsables FOREIGN KEY (id_responsable) REFERENCES responsables_estudiantes(id_responsable)
 );
-
+ 
 
 CREATE TABLE roles (
     id_rol INT PRIMARY KEY AUTO_INCREMENT,
@@ -87,20 +84,19 @@ CREATE TABLE roles (
 CREATE TABLE profesores (
     id_profesor INT PRIMARY KEY AUTO_INCREMENT,
     nombre_profesor VARCHAR(50) NOT NULL,
-    apellidos_profesor VARCHAR(50) NOT NULL,
-    correo_profesor VARCHAR(100) NOT NULL,
-    telefono_profesor INT NOT NULL,
+    apellido_profesor VARCHAR(50) NOT NULL,
+    correo_profesor VARCHAR(100) NOT NULL UNIQUE,
+    telefono_profesor INT NOT NULL UNIQUE,
     direccion_profesor VARCHAR(100) NOT NULL, 
     clave_profesor VARCHAR(255) NOT NULL,
     id_rol INT NOT NULL,
     id_materia INT NOT NULL,
+    -- fecha_contratacion DATE NOT NULL,
     foto_profesor VARCHAR(80),
 	dui_profesor VARCHAR(10) UNIQUE NOT NULL,
 	CONSTRAINT CHK_dui_profesores CHECK (dui_profesor REGEXP '^[0-9]{8}-[0-9]{1}$'),
-    CONSTRAINT CHK_telefono_profesores CHECK (LENGTH(telefono_profesor) = 8),
+    CONSTRAINT CHK_telefono_profesores CHECK (telefono_profesor REGEXP '^[0-9]{8}$'),
     CONSTRAINT CHK_correo_profesores CHECK (correo_profesor REGEXP '^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$'),
-    CONSTRAINT UN_correo_profesores UNIQUE (correo_profesor),
-    CONSTRAINT UN_telefono_profesores UNIQUE (telefono_profesor),
     CONSTRAINT fk_profesores_roles FOREIGN KEY (id_rol) REFERENCES Roles(id_rol),
     CONSTRAINT fk_profesores_materias FOREIGN KEY (id_materia) REFERENCES materias(id_materia)
 );
@@ -128,8 +124,8 @@ CREATE TABLE tipos_asignaciones (
 
 CREATE TABLE asignaciones (
     id_asignacion INT PRIMARY KEY AUTO_INCREMENT,
-    nombre_actividad VARCHAR(100) NOT NULL ,
-    descripcion TEXT NULL, 
+    nombre_actividad VARCHAR(100) NOT NULL UNIQUE,
+    descripcion varchar(200) NULL, 
     porcentaje INT NOT NULL,
     fecha_inicio DATE NOT NULL,
     fecha_finalizacion DATE NOT NULL,
@@ -139,7 +135,6 @@ CREATE TABLE asignaciones (
     id_grado INT NOT NULL,
     CONSTRAINT fk_tbtrimestre_tbactividades FOREIGN KEY (id_trimestre) REFERENCES trimestres(id_trimestre),
     CONSTRAINT fk_tbprofesor_tbactividades FOREIGN KEY (id_profesor) REFERENCES profesores(id_profesor),
-    CONSTRAINT UN_nombre_actividad UNIQUE (nombre_actividad),
     CONSTRAINT fk_tbtipoasignacion_tbasignacion FOREIGN KEY (id_tipo_asignacion) REFERENCES tipos_asignaciones(id_tipo_asignacion),
     CONSTRAINT fk_tbgrado_tbactividades FOREIGN KEY (id_grado) REFERENCES grados(id_grado)
 );
@@ -178,8 +173,7 @@ CREATE TABLE tipos_faltas (
 CREATE TABLE faltas (
     id_falta INT PRIMARY KEY AUTO_INCREMENT,
     id_categoria_falta INT NOT NULL,
-    nombre_falta VARCHAR(100) NOT NULL,
-    CONSTRAINT UN_nombre_falta UNIQUE (nombre_falta),
+    nombre_falta VARCHAR(100) NOT NULL UNIQUE,
     CONSTRAINT fk_tipo_falta_categoria FOREIGN KEY (id_categoria_falta) REFERENCES tipos_faltas(id_categoria_falta)
 );
 
@@ -206,7 +200,7 @@ CREATE TABLE cuotas_pagos (
     id_cuota INT PRIMARY KEY AUTO_INCREMENT,
     id_estudiante INT NOT NULL,
     id_cuota_grado INT NOT NULL,
-    fecha_pago DATETIME DEFAULT NOW() NOT NULL,
+    fecha_pago DATE NULL,
     estado_pago ENUM('Pendiente', 'Pagado') NOT NULL DEFAULT 'Pendiente',
     estado_cargo ENUM ('Con mora', 'Sin mora') NOT NULL DEFAULT 'Sin mora',
     CONSTRAINT fk_tbestudiantes_tbcuotaspagos FOREIGN KEY (id_estudiante) REFERENCES estudiantes(id_estudiante),
@@ -237,20 +231,19 @@ CREATE TABLE matriculas_pagos(
 
 CREATE TABLE tallas_uniformes (
     id_talla INT PRIMARY KEY AUTO_INCREMENT,
-    talla VARCHAR(10) NOT NULL,
-    CONSTRAINT UN_talla UNIQUE (talla)
+    talla VARCHAR(10) NOT NULL UNIQUE
 );
 
 CREATE TABLE tipos_uniformes (
     id_tipo_uniforme INT PRIMARY KEY AUTO_INCREMENT,
-    tipo_uniforme VARCHAR(100) NOT NULL,
-    CONSTRAINT UN_tipo_uniforme UNIQUE (tipo_uniforme)
+    tipo_uniforme VARCHAR(100) NOT NULL UNIQUE
 );
 
 CREATE TABLE catalogo_uniformes (
     id_uniforme INT PRIMARY KEY AUTO_INCREMENT,
-    descripcion TEXT NOT NULL,
-    id_profesor INT,
+    nombre_uniforme varchar(50) NOT NULL,
+    descripcion varchar(200) NOT NULL,
+    id_profesor INT NOT NULL,
     id_tipo_uniforme INT NOT NULL,
     precio DECIMAL(8,2) NOT NULL,
     CONSTRAINT fk_tbprofesores_catalogo FOREIGN KEY (id_profesor) REFERENCES profesores(id_profesor),
@@ -265,6 +258,3 @@ CREATE TABLE tallas_disponibles (
     CONSTRAINT fk_tbtallasuniformes_tbtallasdisponibles FOREIGN KEY (id_talla) REFERENCES tallas_uniformes(id_talla),
     CONSTRAINT fk_tbcatalogouniformes_tbtallasdisponibles FOREIGN KEY (id_uniforme) REFERENCES catalogo_uniformes(id_uniforme)
 );
-
-
-
