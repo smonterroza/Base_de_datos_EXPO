@@ -9,7 +9,8 @@ CREATE TABLE grados (
 
 CREATE TABLE secciones (
     id_seccion INT PRIMARY KEY AUTO_INCREMENT, 
-    nombre_seccion VARCHAR(2) NOT NULL UNIQUE 
+    nombre_seccion VARCHAR(2) NOT NULL,
+    CONSTRAINT UNQ_nombre_seccion UNIQUE (nombre_seccion)
 );
 
 CREATE TABLE cursos (
@@ -30,19 +31,20 @@ CREATE TABLE responsables_estudiantes (
     id_responsable INT PRIMARY KEY AUTO_INCREMENT,
     nombre_responsable VARCHAR(50) NOT NULL,
     apellido_responsable VARCHAR(50) NOT NULL,
-    telefono_responsable INT UNIQUE NOT NULL,
+    telefono_responsable INT NOT NULL,
     direccion_responsable VARCHAR(100) NOT NULL,
-    correo_responsable VARCHAR(100) UNIQUE NOT NULL,
+    correo_responsable VARCHAR(100) NOT NULL,
     parentesco ENUM('Padre', 'Madre', 'Otro') NOT NULL,
+    CONSTRAINT UNQ_telefono_responsable UNIQUE (telefono_responsable),
+    CONSTRAINT UNQ_correo_responsable UNIQUE (correo_responsable),
     CONSTRAINT CHK_telefono_responsables CHECK (telefono_responsable REGEXP '^[0-9]{8}$'),
     CONSTRAINT CHK_telefono_responsables_estudiantes CHECK (LENGTH(telefono_responsable) = 8),
     CONSTRAINT CHK_correo_responsables_estudiantes CHECK (correo_responsable REGEXP '^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$')
 );
 
-
 CREATE TABLE estudiantes (
     id_estudiante INT PRIMARY KEY AUTO_INCREMENT,
-    alias_estudiante VARCHAR(20) UNIQUE NOT NULL,
+    alias_estudiante VARCHAR(20) NOT NULL,
     clave_estudiante VARCHAR(255) NOT NULL,
     nombre_estudiante VARCHAR(50) NOT NULL,
     apellido_estudiante VARCHAR(50) NOT NULL,
@@ -55,6 +57,7 @@ CREATE TABLE estudiantes (
     tipo_sangre VARCHAR(30) NULL,
     id_responsable INT NOT NULL,
     id_curso INT NOT NULL,
+    CONSTRAINT UNQ_alias_estudiante UNIQUE (alias_estudiante),
     CONSTRAINT fk_tbcurso_tbestudiante FOREIGN KEY (id_curso) REFERENCES cursos(id_curso),
     CONSTRAINT fk_estudiantes_responsables FOREIGN KEY (id_responsable) REFERENCES responsables_estudiantes(id_responsable)
 );
@@ -85,14 +88,17 @@ CREATE TABLE profesores (
     id_profesor INT PRIMARY KEY AUTO_INCREMENT,
     nombre_profesor VARCHAR(50) NOT NULL,
     apellido_profesor VARCHAR(50) NOT NULL,
-    correo_profesor VARCHAR(100) NOT NULL UNIQUE,
-    telefono_profesor INT NOT NULL UNIQUE,
+    correo_profesor VARCHAR(100) NOT NULL,
+    telefono_profesor INT NOT NULL,
     direccion_profesor VARCHAR(100) NOT NULL, 
     clave_profesor VARCHAR(255) NOT NULL,
     id_rol INT NOT NULL,
     id_materia INT NOT NULL,
-    foto_profesor VARCHAR(80),
-	 dui_profesor VARCHAR(10) UNIQUE NOT NULL,
+    foto_profesor VARCHAR(80) NULL,
+	 dui_profesor VARCHAR(10) NOT NULL,
+	 CONSTRAINT UNQ_correo_profesor UNIQUE (correo_profesor),
+	 CONSTRAINT UNQ_telefono_profesor UNIQUE (telefono_profesor),
+	 CONSTRAINT UNQ_dui_profesor UNIQUE (dui_profesor),
 	 CONSTRAINT CHK_dui_profesores CHECK (dui_profesor REGEXP '^[0-9]{8}-[0-9]{1}$'),
     CONSTRAINT CHK_telefono_profesores CHECK (telefono_profesor REGEXP '^[0-9]{8}$'),
     CONSTRAINT CHK_correo_profesores CHECK (correo_profesor REGEXP '^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$'),
@@ -118,12 +124,13 @@ CREATE TABLE trimestres (
 
 CREATE TABLE tipos_asignaciones (
     id_tipo_asignacion INT PRIMARY KEY AUTO_INCREMENT,
-    nombre_tipo_asignacion VARCHAR(100) NOT NULL UNIQUE
+    nombre_tipo_asignacion VARCHAR(100) NOT NULL,
+    CONSTRAINT UNQ_nombre_tipo_asignacion UNIQUE (nombre_tipo_asignacion)
 );
 
 CREATE TABLE asignaciones (
     id_asignacion INT PRIMARY KEY AUTO_INCREMENT,
-    nombre_actividad VARCHAR(100) NOT NULL UNIQUE,
+    nombre_actividad VARCHAR(100) NOT NULL,
     descripcion varchar(200) NULL, 
     porcentaje INT NOT NULL,
     fecha_inicio DATE NOT NULL,
@@ -132,6 +139,7 @@ CREATE TABLE asignaciones (
     id_trimestre INT NOT NULL,
     id_profesor INT NOT NULL,
     id_grado INT NOT NULL,
+    CONSTRAINT UNQ_nombre_actividad UNIQUE (nombre_actividad),
     CONSTRAINT fk_tbtrimestre_tbactividades FOREIGN KEY (id_trimestre) REFERENCES trimestres(id_trimestre),
     CONSTRAINT fk_tbprofesor_tbactividades FOREIGN KEY (id_profesor) REFERENCES profesores(id_profesor),
     CONSTRAINT fk_tbtipoasignacion_tbasignacion FOREIGN KEY (id_tipo_asignacion) REFERENCES tipos_asignaciones(id_tipo_asignacion),
@@ -175,7 +183,8 @@ CREATE TABLE tipos_faltas (
 CREATE TABLE faltas (
     id_falta INT PRIMARY KEY AUTO_INCREMENT,
     id_categoria_falta INT NOT NULL,
-    nombre_falta VARCHAR(100) NOT NULL UNIQUE,
+    nombre_falta VARCHAR(100) NOT NULL,
+    CONSTRAINT UNQ_nombre_falta UNIQUE (nombre_falta),
     CONSTRAINT fk_tipo_falta_categoria FOREIGN KEY (id_categoria_falta) REFERENCES tipos_faltas(id_categoria_falta)
 );
 
@@ -237,12 +246,14 @@ CREATE TABLE matriculas_pagos(
 
 CREATE TABLE tallas_uniformes (
     id_talla INT PRIMARY KEY AUTO_INCREMENT,
-    talla VARCHAR(10) NOT NULL UNIQUE
+    talla VARCHAR(10) NOT NULL,
+    CONSTRAINT UNQ_talla_uniforme UNIQUE (talla)
 );
 
 CREATE TABLE tipos_uniformes (
     id_tipo_uniforme INT PRIMARY KEY AUTO_INCREMENT,
-    tipo_uniforme VARCHAR(100) NOT NULL UNIQUE
+    tipo_uniforme VARCHAR(100) NOT NULL,
+    CONSTRAINT UNQ_tipo_uniforme UNIQUE (tipo_uniforme)
 );
 
 CREATE TABLE catalogo_uniformes (
