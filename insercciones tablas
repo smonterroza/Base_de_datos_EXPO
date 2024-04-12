@@ -17,6 +17,14 @@ insert into grados (nombre_grado) values ('10');
 -- inserccion de secciones
 insert into secciones (nombre_seccion) values ('A');
 insert into secciones (nombre_seccion) values ('B');
+insert into secciones (nombre_seccion) values ('C');
+insert into secciones (nombre_seccion) values ('D');
+insert into secciones (nombre_seccion) values ('E');
+insert into secciones (nombre_seccion) values ('F');
+insert into secciones (nombre_seccion) values ('G');
+insert into secciones (nombre_seccion) values ('H');
+insert into secciones (nombre_seccion) values ('I');
+insert into secciones (nombre_seccion) values ('J');
 
 -- inserccion de cursos 
 
@@ -45,6 +53,8 @@ insert into materias (tipo_materia, nombre_materia) values ('Complementaria', 'E
 insert into materias (tipo_materia, nombre_materia) values ('Complementaria', 'Educacion Artistica');
 insert into materias (tipo_materia, nombre_materia) values ('Complementaria', 'Educacion Civica');
 insert into materias (tipo_materia, nombre_materia) values ('Complementaria', 'Religion');
+insert into materias (tipo_materia, nombre_materia) values ('Complementaria', 'Artística');
+insert into materias (tipo_materia, nombre_materia) values ('Complementaria', 'Ortografía');
 
 -- inserciones tabla responsables_estudiantes
 
@@ -183,9 +193,17 @@ insert into tipos_faltas (categoria, ponderacion) values ('Muy Grave', 2);
 
 -- consultas para insertar faltas
 
-insert into faltas (id_categoria_falta, nombre_falta) values (1, 'Falta de uniforme');
-insert into faltas (id_categoria_falta, nombre_falta) values (2, 'Falta de tarea');
-insert into faltas (id_categoria_falta, nombre_falta) values (3, 'Falta de cuaderno');
+insert into faltas (id_categoria_falta, nombre_falta) values (1, 'Falta el respeto al profesor');
+insert into faltas (id_categoria_falta, nombre_falta) values (2, 'Falta el respeto a sus compañeros');
+insert into faltas (id_categoria_falta, nombre_falta) values (3, 'Se escapa de clases');
+insert into faltas (id_categoria_falta, nombre_falta) values (2, 'Platica en clases');
+insert into faltas (id_categoria_falta, nombre_falta) values (2, 'Come en clases');
+insert into faltas (id_categoria_falta, nombre_falta) values (2, 'No presenta útiles escolares');
+insert into faltas (id_categoria_falta, nombre_falta) values (2, 'Interrumpe la clase');
+insert into faltas (id_categoria_falta, nombre_falta) values (2, 'Utiliza el teléfono en clases');
+insert into faltas (id_categoria_falta, nombre_falta) values (2, 'No entrega tareas');
+insert into faltas (id_categoria_falta, nombre_falta) values (2, 'No trabaja');
+insert into faltas (id_categoria_falta, nombre_falta) values (1, 'No porta el uniforme');
 
 -- consultas para insertar faltas_estudiantes
 
