@@ -261,7 +261,7 @@ CREATE TABLE tipos_uniformes (
     CONSTRAINT UNQ_tipo_uniforme UNIQUE (tipo_uniforme)
 );
 
-CREATE TABLE catalogo_uniformes (
+CREATE TABLE catalogos_uniformes (
     id_uniforme INT PRIMARY KEY AUTO_INCREMENT,
     nombre_uniforme varchar(50) NOT NULL,
     descripcion varchar(200) NOT NULL,
@@ -280,5 +280,5 @@ CREATE TABLE tallas_disponibles (
     stock INT  NOT NULL,
     CONSTRAINT CHK_stock_tallas CHECK (stock >= 0),
     CONSTRAINT fk_tbtallasuniformes_tbtallasdisponibles FOREIGN KEY (id_talla) REFERENCES tallas_uniformes(id_talla),
-    CONSTRAINT fk_tbcatalogouniformes_tbtallasdisponibles FOREIGN KEY (id_uniforme) REFERENCES catalogo_uniformes(id_uniforme)
+    CONSTRAINT fk_tbcatalogouniformes_tbtallasdisponibles FOREIGN KEY (id_uniforme) REFERENCES catalogos_uniformes(id_uniforme)
 );
