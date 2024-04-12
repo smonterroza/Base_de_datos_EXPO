@@ -1,0 +1,36 @@
+DROP PROCEDURE IF EXISTS sp_obtener_estudiantes_sin_pagar;
+DROP PROCEDURE IF EXISTS sp_obtener_total_estudiantes;
+DROP PROCEDURE IF EXISTS sp_obtener_cutos_grados;
+
+-- Procedimientos sp_obtener_estudiantes_sin_pagar obtiene todos los estudiantes que su estado_pago = pendiente
+DELIMITER //
+CREATE PROCEDURE sp_obtener_estudiantes_sin_pagar()
+BEGIN
+    SELECT e.id_estudiante, e.alias_estudiante, e.nombre_estudiante, e.apellido_estudiante, e.fecha_nacimiento, e.genero, e.horario, e.estado_estudiante, e.tipo_sangre, e.id_responsable, e.id_curso
+    FROM estudiantes e 
+    LEFT JOIN matriculas_pagos mp ON e.id_estudiante = mp.id_estudiante
+    WHERE mp.estado_pago = 'pendiente';
+END;//
+DELIMITER ;
+
+
+-- Procedimientos sp_obtener_cutos_grados obtiene la cuota de un grado en especifico mandandolo como parametro 
+DELIMITER //
+CREATE PROCEDURE sp_obtener_cutos_grados( IN var_id_grado INT)
+BEGIN
+    SELECT cuota FROM cuotas_grados WHERE id_grado = var_id_grado;
+END;//
+DELIMITER ;
+
+
+-- Procedimientos sp_obtener_total_estudiantes obtiene el total de estudiantes con un count
+DELIMITER //
+CREATE PROCEDURE sp_obtener_total_estudiantes()
+BEGIN
+    SELECT COUNT(*) AS total_estudiantes FROM estudiantes;
+END;//
+DELIMITER ;
+
+CALL sp_obtener_total_estudiantes();
+CALL sp_obtener_estudiantes_sin_pagar();    
+CALL sp_obtener_cutos_grados(2);
