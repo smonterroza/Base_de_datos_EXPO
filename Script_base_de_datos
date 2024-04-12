@@ -164,9 +164,9 @@ CREATE TABLE notas_asignaciones (
 
 CREATE TABLE sesiones_clases (
     id_sesion INT PRIMARY KEY AUTO_INCREMENT,
-    id_profesor INT NOT NULL,
+    id_curso_profesor INT NOT NULL,
     fecha_hora DATETIME NOT NULL,
-    CONSTRAINT fk_tbprofesores_tbsesionesclase FOREIGN KEY (id_profesor) REFERENCES profesores(id_profesor)
+    CONSTRAINT fk_tbcursosprofesores_tbsesionesclase FOREIGN KEY (id_curso_profesor) REFERENCES cursos_profesores(id_curso_profesor)
 );
 
 CREATE TABLE asistencias (
