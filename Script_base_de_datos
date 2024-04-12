@@ -122,7 +122,7 @@ CREATE TABLE cursos_profesores (
 
 CREATE TABLE trimestres (
     id_trimestre INT PRIMARY KEY AUTO_INCREMENT,
-    nombre_trimestre ENUM('1 trimestre', '2 trimestre', '3 trimestre') NOT NULL,
+    nombre_trimestre VARCHAR(20) NOT NULL,
     lapso_anual YEAR NOT NULL,
     fecha_inicio DATE NOT NULL,
     fecha_fin DATE NOT NULL
