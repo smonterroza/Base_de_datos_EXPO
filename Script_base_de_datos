@@ -145,7 +145,6 @@ CREATE TABLE asignaciones (
     id_trimestre INT NOT NULL,
     id_profesor_materia INT NOT NULL,
     id_curso INT NOT NULL,
-    CONSTRAINT UNQ_nombre_actividad UNIQUE (nombre_actividad),
     CONSTRAINT fk_tbtrimestre_tbactividades FOREIGN KEY (id_trimestre) REFERENCES trimestres(id_trimestre),
     CONSTRAINT fk_tbprofesormateria_tbactividades FOREIGN KEY (id_profesor_materia) REFERENCES profesores_materias(id_profesor_materia),
     CONSTRAINT fk_tbtipoasignacion_tbasignacion FOREIGN KEY (id_tipo_asignacion) REFERENCES tipos_asignaciones(id_tipo_asignacion),
