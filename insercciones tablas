@@ -1,3 +1,5 @@
+
+
 use colegioagazzis;
 
 -- inserccion de grados
@@ -53,7 +55,7 @@ insert into responsables_estudiantes (nombre_responsable, apellido_responsable, 
 insert into responsables_estudiantes (nombre_responsable, apellido_responsable, telefono_responsable, direccion_responsable, correo_responsable, parentesco) values ('Maria', 'Lopez', 22232222, 'Calle 1', 'coreoresponable4@gmai.com', 'Madre');
 insert into responsables_estudiantes (nombre_responsable, apellido_responsable, telefono_responsable, direccion_responsable, correo_responsable, parentesco) values ('Pedro', 'Ramirez', 22222222, 'Calle 1', 'coreoresponable5@gmai.com', 'Otro');
 insert into responsables_estudiantes (nombre_responsable, apellido_responsable, telefono_responsable, direccion_responsable, correo_responsable, parentesco) values ('Juan', 'Perez', 22222226, 'Calle 1', 'coreoresponable6@gmai.com', 'Padre');
-insert into responsables_estudiantes (nombre_responsable, apellido_responsable, telefono_responsable, direccion_responsable, correo_responsable, parentesco) values ('Maria', 'Lopez', 22222222, 'Calle 1', 'coreoresponable7@gmai.com', 'Madre');
+insert into responsables_estudiantes (nombre_responsable, apellido_responsable, telefono_responsable, direccion_responsable, correo_responsable, parentesco) values ('Maria', 'Lopez', 22322222, 'Calle 1', 'coreoresponable7@gmai.com', 'Madre');
 insert into responsables_estudiantes (nombre_responsable, apellido_responsable, telefono_responsable, direccion_responsable, correo_responsable, parentesco) values ('Pedro', 'Ramirez', 12222222, 'Calle 1', 'coreoresponable8@gmai.com', 'Otro');
 insert into responsables_estudiantes (nombre_responsable, apellido_responsable, telefono_responsable, direccion_responsable, correo_responsable, parentesco) values ('Juan', 'Perez', 32222226, 'Calle 1', 'coreoresponable9@gmai.com', 'Padre');
 
@@ -77,16 +79,16 @@ insert into roles (nombre_rol, agregar_estudiantes, agregar_profesores, agregar_
 
 -- inserciones tabla profesores
 
-insert into profesores (nombre_profesor, apellidos_profesor, correo_profesor, telefono_profesor, direccion_profesor, clave_profesor, id_rol, id_materia, dui_profesor) values ('Juan', 'Perez', 'profesorcoreo1@gmail.com', 62722224, 'Calle 1', '12345645', 2, 1, '12345678-9');	
-insert into profesores (nombre_profesor, apellidos_profesor, correo_profesor, telefono_profesor, direccion_profesor, clave_profesor, id_rol, id_materia, dui_profesor) values ('Maria', 'Lopez', 'profesorcoreo2@gmail.com', 12222223, 'Calle 2', '12345645', 2, 2, '12345778-9');	
-insert into profesores (nombre_profesor, apellidos_profesor, correo_profesor, telefono_profesor, direccion_profesor, clave_profesor, id_rol, id_materia, dui_profesor) values ('Pedro', 'Ramirez', 'profesorcoreo3@gmail.com', 22222222, 'Calle 4', '12345645', 2, 3, '12335678-9');	
-insert into profesores (nombre_profesor, apellidos_profesor, correo_profesor, telefono_profesor, direccion_profesor, clave_profesor, id_rol, id_materia, dui_profesor) values ('Juan', 'Perez', 'profesorcoreo4@gmail.com', 22822921, 'Calle 5', '12345645', 2, 4, '12345374-9');
-insert into profesores (nombre_profesor, apellidos_profesor, correo_profesor, telefono_profesor, direccion_profesor, clave_profesor, id_rol, id_materia, dui_profesor) values ('Maria', 'Lopez', 'profesorcoreo5@gmail.com', 27228222, 'Calle 3', '123456', 2, 5, '12645678-9');
-insert into profesores (nombre_profesor, apellidos_profesor, correo_profesor, telefono_profesor, direccion_profesor, clave_profesor, id_rol, id_materia, dui_profesor) values ('Pedro', 'Ramirez', 'profesorcoreo6@gmail.com', 22762252, 'Calle 5', '123456', 2, 6, '12355678-4');
-insert into profesores (nombre_profesor, apellidos_profesor, correo_profesor, telefono_profesor, direccion_profesor, clave_profesor, id_rol, id_materia, dui_profesor) values ('Juan', 'Perez', 'profesorcoreo7@gmail.com', 22222672, 'Calle 4', '123456', 2, 7, '12366768-9');
-insert into profesores (nombre_profesor, apellidos_profesor, correo_profesor, telefono_profesor, direccion_profesor, clave_profesor, id_rol, id_materia, dui_profesor) values ('Maria', 'Lopez', 'profesorcoreo8@gmail.com', 34222672, 'Calle 3', '123456', 2, 8, '12835678-9');
-insert into profesores (nombre_profesor, apellidos_profesor, correo_profesor, telefono_profesor, direccion_profesor, clave_profesor, id_rol, id_materia, dui_profesor) values ('Pedro', 'Ramirez', 'profesorcoreo9@gmail.com', 22422672, 'Calle 6', '123356', 2, 8, '12143678-9');
-insert into profesores (nombre_profesor, apellidos_profesor, correo_profesor, telefono_profesor, direccion_profesor, clave_profesor, id_rol, id_materia, dui_profesor) values ('Juan', 'Perez', 'profesorcoreo10@gmail.com', 22212672, 'Calle 90', '123556', 2, 8, '12845178-1');
+insert into profesores (nombre_profesor, apellido_profesor, correo_profesor, telefono_profesor, direccion_profesor, clave_profesor, id_rol, id_materia, dui_profesor) values ('Juan', 'Perez', 'profesorcoreo1@gmail.com', 62722224, 'Calle 1', '12345645', 2, 1, '12345678-9');	
+insert into profesores (nombre_profesor, apellido_profesor, correo_profesor, telefono_profesor, direccion_profesor, clave_profesor, id_rol, id_materia, dui_profesor) values ('Maria', 'Lopez', 'profesorcoreo2@gmail.com', 12222223, 'Calle 2', '12345645', 2, 2, '12345778-9');	
+insert into profesores (nombre_profesor, apellido_profesor, correo_profesor, telefono_profesor, direccion_profesor, clave_profesor, id_rol, id_materia, dui_profesor) values ('Pedro', 'Ramirez', 'profesorcoreo3@gmail.com', 22222222, 'Calle 4', '12345645', 2, 3, '12335678-9');	
+insert into profesores (nombre_profesor, apellido_profesor, correo_profesor, telefono_profesor, direccion_profesor, clave_profesor, id_rol, id_materia, dui_profesor) values ('Juan', 'Perez', 'profesorcoreo4@gmail.com', 22822921, 'Calle 5', '12345645', 2, 4, '12345374-9');
+insert into profesores (nombre_profesor, apellido_profesor, correo_profesor, telefono_profesor, direccion_profesor, clave_profesor, id_rol, id_materia, dui_profesor) values ('Maria', 'Lopez', 'profesorcoreo5@gmail.com', 27228222, 'Calle 3', '123456', 2, 5, '12645678-9');
+insert into profesores (nombre_profesor, apellido_profesor, correo_profesor, telefono_profesor, direccion_profesor, clave_profesor, id_rol, id_materia, dui_profesor) values ('Pedro', 'Ramirez', 'profesorcoreo6@gmail.com', 22762252, 'Calle 5', '123456', 2, 6, '12355678-4');
+insert into profesores (nombre_profesor, apellido_profesor, correo_profesor, telefono_profesor, direccion_profesor, clave_profesor, id_rol, id_materia, dui_profesor) values ('Juan', 'Perez', 'profesorcoreo7@gmail.com', 22222672, 'Calle 4', '123456', 2, 7, '12366768-9');
+insert into profesores (nombre_profesor, apellido_profesor, correo_profesor, telefono_profesor, direccion_profesor, clave_profesor, id_rol, id_materia, dui_profesor) values ('Maria', 'Lopez', 'profesorcoreo8@gmail.com', 34222672, 'Calle 3', '123456', 2, 8, '12835678-9');
+insert into profesores (nombre_profesor, apellido_profesor, correo_profesor, telefono_profesor, direccion_profesor, clave_profesor, id_rol, id_materia, dui_profesor) values ('Pedro', 'Ramirez', 'profesorcoreo9@gmail.com', 22422672, 'Calle 6', '123356', 2, 8, '12143678-9');
+insert into profesores (nombre_profesor, apellido_profesor, correo_profesor, telefono_profesor, direccion_profesor, clave_profesor, id_rol, id_materia, dui_profesor) values ('Juan', 'Perez', 'profesorcoreo10@gmail.com', 22212672, 'Calle 90', '123556', 2, 8, '12845178-1');
 
 -- inserciones tabla trimestres
 
@@ -223,60 +225,4 @@ insert into cuotas_pagos (id_estudiante, id_cuota_grado, fecha_pago) values (6, 
 insert into cuotas_pagos (id_estudiante, id_cuota_grado, fecha_pago) values (7, 7, '2024-01-01');
 insert into cuotas_pagos (id_estudiante, id_cuota_grado, fecha_pago) values (8, 8, '2024-01-01');
 insert into cuotas_pagos (id_estudiante, id_cuota_grado, fecha_pago) values (9, 9, '2024-01-01');
-insert into cuotas_pagos (id_estudiante, id_cuota_grado, fecha_pago) values (10, 10, '2024-01-01');
-
--- consultas para insertar matriculas_grados
-
-insert into matriculas_grados (id_grado, matricula, fecha_vencimiento) values (1, 100, '2024-01-01');
-insert into matriculas_grados (id_grado, matricula, fecha_vencimiento) values (2, 200, '2024-01-01');
-insert into matriculas_grados (id_grado, matricula, fecha_vencimiento) values (3, 300, '2024-01-01');
-insert into matriculas_grados (id_grado, matricula, fecha_vencimiento) values (4, 400, '2024-01-01');
-insert into matriculas_grados (id_grado, matricula, fecha_vencimiento) values (5, 500, '2024-01-01');
-insert into matriculas_grados (id_grado, matricula, fecha_vencimiento) values (6, 600, '2024-01-01');
-insert into matriculas_grados (id_grado, matricula, fecha_vencimiento) values (7, 700, '2024-01-01');
-insert into matriculas_grados (id_grado, matricula, fecha_vencimiento) values (8, 800, '2024-01-01');
-insert into matriculas_grados (id_grado, matricula, fecha_vencimiento) values (9, 900, '2024-01-01');
-insert into matriculas_grados (id_grado, matricula, fecha_vencimiento) values (10, 1000, '2024-01-01');
-
--- consultas para insertar matriculas_pagos
-
-insert into matriculas_pagos (id_estudiante, id_matricula_grado, primer_pago, fecha_primer_pago) values (1, 1, 100, '2024-01-01');
-insert into matriculas_pagos (id_estudiante, id_matricula_grado, primer_pago, fecha_primer_pago) values (2, 2, 200, '2024-01-01');
-insert into matriculas_pagos (id_estudiante, id_matricula_grado, primer_pago, fecha_primer_pago) values (3, 3, 300, '2024-01-01');
-insert into matriculas_pagos (id_estudiante, id_matricula_grado, primer_pago, fecha_primer_pago) values (4, 4, 400, '2024-01-01');
-insert into matriculas_pagos (id_estudiante, id_matricula_grado, primer_pago, fecha_primer_pago) values (5, 5, 500, '2024-01-01');
-insert into matriculas_pagos (id_estudiante, id_matricula_grado, primer_pago, fecha_primer_pago) values (6, 6, 600, '2024-01-01');
-insert into matriculas_pagos (id_estudiante, id_matricula_grado, primer_pago, fecha_primer_pago) values (7, 7, 700, '2024-01-01');
-insert into matriculas_pagos (id_estudiante, id_matricula_grado, primer_pago, fecha_primer_pago) values (8, 8, 800, '2024-01-01');
-insert into matriculas_pagos (id_estudiante, id_matricula_grado, primer_pago, fecha_primer_pago) values (9, 9, 900, '2024-01-01');
-insert into matriculas_pagos (id_estudiante, id_matricula_grado, primer_pago, fecha_primer_pago) values (10, 10, 1000, '2024-01-01');
-
--- inserciones tabla uniformes
-
-insert into tallas_uniformes (talla) values ('XS');
-insert into tallas_uniformes (talla) values ('S');
-insert into tallas_uniformes (talla) values ('M');
-insert into tallas_uniformes (talla) values ('L');
-insert into tallas_uniformes (talla) values ('XL');
-
--- inserciones tabla tipo_uniformes
-
-insert into tipos_uniformes (tipo_uniforme) values ('Camisa');
-insert into tipos_uniformes (tipo_uniforme) values ('Pantalón');
-insert into tipos_uniformes (tipo_uniforme) values ('Camisa deportiva');
-insert into tipos_uniformes (tipo_uniforme) values ('Pantalón deportivo');
-
--- inserciones tabla catalogo_uniformes
-
-insert into catalogo_uniformes (descripcion, id_profesor, id_tipo_uniforme, precio) values ('Camisa blanca', 1, 1, 10);
-insert into catalogo_uniformes (descripcion, id_profesor, id_tipo_uniforme, precio) values ('Pantalón azul', 2, 2, 20);
-insert into catalogo_uniformes (descripcion, id_profesor, id_tipo_uniforme, precio) values ('Camisa deportiva roja', 3, 3, 30);
-insert into catalogo_uniformes (descripcion, id_profesor, id_tipo_uniforme, precio) values ('Pantalón deportivo', 4, 4, 40);
-
--- inserciones tabla tallas_disponibles
-
-insert into tallas_disponibles (id_uniforme, id_talla, stock) values (1, 1, 10);
-insert into tallas_disponibles (id_uniforme, id_talla, stock) values (2, 2, 20);
-insert into tallas_disponibles (id_uniforme, id_talla, stock) values (3, 3, 30);
-insert into tallas_disponibles (id_uniforme, id_talla, stock) values (4, 4, 40);
-
+insert into cuotas_pagos (id_estudiante, id_cuot
