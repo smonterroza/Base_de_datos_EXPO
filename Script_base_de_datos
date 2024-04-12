@@ -91,10 +91,9 @@ CREATE TABLE profesores (
     clave_profesor VARCHAR(255) NOT NULL,
     id_rol INT NOT NULL,
     id_materia INT NOT NULL,
-    -- fecha_contratacion DATE NOT NULL,
     foto_profesor VARCHAR(80),
-	dui_profesor VARCHAR(10) UNIQUE NOT NULL,
-	CONSTRAINT CHK_dui_profesores CHECK (dui_profesor REGEXP '^[0-9]{8}-[0-9]{1}$'),
+	 dui_profesor VARCHAR(10) UNIQUE NOT NULL,
+	 CONSTRAINT CHK_dui_profesores CHECK (dui_profesor REGEXP '^[0-9]{8}-[0-9]{1}$'),
     CONSTRAINT CHK_telefono_profesores CHECK (telefono_profesor REGEXP '^[0-9]{8}$'),
     CONSTRAINT CHK_correo_profesores CHECK (correo_profesor REGEXP '^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$'),
     CONSTRAINT fk_profesores_roles FOREIGN KEY (id_rol) REFERENCES Roles(id_rol),
@@ -136,7 +135,8 @@ CREATE TABLE asignaciones (
     CONSTRAINT fk_tbtrimestre_tbactividades FOREIGN KEY (id_trimestre) REFERENCES trimestres(id_trimestre),
     CONSTRAINT fk_tbprofesor_tbactividades FOREIGN KEY (id_profesor) REFERENCES profesores(id_profesor),
     CONSTRAINT fk_tbtipoasignacion_tbasignacion FOREIGN KEY (id_tipo_asignacion) REFERENCES tipos_asignaciones(id_tipo_asignacion),
-    CONSTRAINT fk_tbgrado_tbactividades FOREIGN KEY (id_grado) REFERENCES grados(id_grado)
+    CONSTRAINT fk_tbgrado_tbactividades FOREIGN KEY (id_grado) REFERENCES grados(id_grado),
+    CONSTRAINT CHK_porcentaje_asignacion CHECK (porcentaje >= 1)
 );
 
 CREATE TABLE notas_asignaciones (
@@ -145,7 +145,8 @@ CREATE TABLE notas_asignaciones (
     id_asignacion INT NOT NULL,
     nota DECIMAL(2,2) NOT NULL,
     CONSTRAINT fk_tbestudiantes_tbnotasact FOREIGN KEY (id_estudiante) REFERENCES estudiantes(id_estudiante),
-    CONSTRAINT fk_tbasignaciones_tbestudiantes FOREIGN KEY (id_asignacion) REFERENCES asignaciones(id_asignacion)
+    CONSTRAINT fk_tbasignaciones_tbestudiantes FOREIGN KEY (id_asignacion) REFERENCES asignaciones(id_asignacion),
+    CONSTRAINT CHK_nota_asignacion CHECK (nota >= 0)
 );
 
 CREATE TABLE sesiones_clases (
@@ -167,7 +168,8 @@ CREATE TABLE asistencias (
 CREATE TABLE tipos_faltas (
     id_categoria_falta INT PRIMARY KEY AUTO_INCREMENT,
     categoria ENUM('Leve', 'Grave', 'Muy Grave') NOT NULL,
-    ponderacion DECIMAL(2,2) NOT NULL 
+    ponderacion DECIMAL(2,2) NOT NULL,
+    CONSTRAINT CHK_ponderacion_falta CHECK (ponderacion >= 0)
 );
 
 CREATE TABLE faltas (
@@ -193,7 +195,8 @@ CREATE TABLE cuotas_grados (
     id_grado INT NOT NULL,
     cuota DECIMAL(5,2) NOT NULL,
     fecha_vencimiento DATE NOT NULL,
-    CONSTRAINT fk_tbgrado_tbcuotasgrado FOREIGN KEY (id_grado) REFERENCES grados(id_grado)
+    CONSTRAINT fk_tbgrado_tbcuotasgrado FOREIGN KEY (id_grado) REFERENCES grados(id_grado),
+    CONSTRAINT CHK_cuota_grado CHECK (cuota >= 0)
 );
 
 CREATE TABLE cuotas_pagos (
@@ -212,7 +215,8 @@ CREATE TABLE matriculas_grados(
     id_grado INT NOT NULL,
     matricula DECIMAL(5,2) NOT NULL,
     fecha_vencimiento DATE NOT NULL,
-    CONSTRAINT fk_tbgrado_tbmatriculasgrado FOREIGN KEY (id_grado) REFERENCES grados(id_grado)
+    CONSTRAINT fk_tbgrado_tbmatriculasgrado FOREIGN KEY (id_grado) REFERENCES grados(id_grado),
+    CONSTRAINT CHK_matricula_grado CHECK (matricula >= 0)
 );
 
 CREATE TABLE matriculas_pagos(
@@ -225,6 +229,8 @@ CREATE TABLE matriculas_pagos(
     fecha_segundo_pago DATE NULL,
     estado_pago ENUM('Pendiente', 'Pagado') NOT NULL DEFAULT 'Pendiente',
     estado_cargo ENUM ('Con mora', 'Sin mora') NOT NULL DEFAULT 'Sin mora',
+    CONSTRAINT CHK_primer_pago_matricula CHECK (primer_pago >= 0),
+    CONSTRAINT CHK_segundo_pago_matricula CHECK (segundo_pago >= 0),
     CONSTRAINT fk_tbestudiantes_tbmatriculaspagos FOREIGN KEY (id_estudiante) REFERENCES estudiantes(id_estudiante),
     CONSTRAINT fk_tbmatriculasgrado_tbmatriculaspagos FOREIGN KEY (id_matricula_grado) REFERENCES matriculas_grados(id_matricula_grado)
 );
@@ -246,6 +252,7 @@ CREATE TABLE catalogo_uniformes (
     id_profesor INT NOT NULL,
     id_tipo_uniforme INT NOT NULL,
     precio DECIMAL(8,2) NOT NULL,
+    CONSTRAINT CHK_precio_catalogo CHECK (precio >= 0),
     CONSTRAINT fk_tbprofesores_catalogo FOREIGN KEY (id_profesor) REFERENCES profesores(id_profesor),
     CONSTRAINT fk_tbtiposuniformes_tbcatalogouniformes FOREIGN KEY (id_tipo_uniforme) REFERENCES tipos_uniformes(id_tipo_uniforme)
 );
@@ -254,7 +261,8 @@ CREATE TABLE tallas_disponibles (
     id_talla_disponible INT PRIMARY KEY AUTO_INCREMENT,
     id_uniforme INT NOT NULL,
     id_talla INT NOT NULL,
-    stock INT NOT NULL,
+    stock INT  NOT NULL,
+    CONSTRAINT CHK_stock_tallas CHECK (stock >= 0),
     CONSTRAINT fk_tbtallasuniformes_tbtallasdisponibles FOREIGN KEY (id_talla) REFERENCES tallas_uniformes(id_talla),
     CONSTRAINT fk_tbcatalogouniformes_tbtallasdisponibles FOREIGN KEY (id_uniforme) REFERENCES catalogo_uniformes(id_uniforme)
 );
