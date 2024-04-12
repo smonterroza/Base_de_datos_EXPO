@@ -225,4 +225,59 @@ insert into cuotas_pagos (id_estudiante, id_cuota_grado, fecha_pago) values (6, 
 insert into cuotas_pagos (id_estudiante, id_cuota_grado, fecha_pago) values (7, 7, '2024-01-01');
 insert into cuotas_pagos (id_estudiante, id_cuota_grado, fecha_pago) values (8, 8, '2024-01-01');
 insert into cuotas_pagos (id_estudiante, id_cuota_grado, fecha_pago) values (9, 9, '2024-01-01');
-insert into cuotas_pagos (id_estudiante, id_cuot
+insert into cuotas_pagos (id_estudiante, id_cuota_grado, fecha_pago) values (10, 10, '2024-01-01');
+
+-- consultas para insertar matriculas_grados
+
+insert into matriculas_grados (id_grado, matricula, fecha_vencimiento) values (1, 100, '2024-01-01');
+insert into matriculas_grados (id_grado, matricula, fecha_vencimiento) values (2, 200, '2024-01-01');
+insert into matriculas_grados (id_grado, matricula, fecha_vencimiento) values (3, 300, '2024-01-01');
+insert into matriculas_grados (id_grado, matricula, fecha_vencimiento) values (4, 400, '2024-01-01');
+insert into matriculas_grados (id_grado, matricula, fecha_vencimiento) values (5, 500, '2024-01-01');
+insert into matriculas_grados (id_grado, matricula, fecha_vencimiento) values (6, 600, '2024-01-01');
+insert into matriculas_grados (id_grado, matricula, fecha_vencimiento) values (7, 700, '2024-01-01');
+insert into matriculas_grados (id_grado, matricula, fecha_vencimiento) values (8, 800, '2024-01-01');
+insert into matriculas_grados (id_grado, matricula, fecha_vencimiento) values (9, 900, '2024-01-01');
+insert into matriculas_grados (id_grado, matricula, fecha_vencimiento) values (10, 1000, '2024-01-01');
+
+-- consultas para insertar matriculas_pagos
+
+insert into matriculas_pagos (id_estudiante, id_matricula_grado, primer_pago, fecha_primer_pago) values (1, 1, 100, '2024-01-01');
+insert into matriculas_pagos (id_estudiante, id_matricula_grado, primer_pago, fecha_primer_pago) values (2, 2, 200, '2024-01-01');
+insert into matriculas_pagos (id_estudiante, id_matricula_grado, primer_pago, fecha_primer_pago) values (3, 3, 300, '2024-01-01');
+insert into matriculas_pagos (id_estudiante, id_matricula_grado, primer_pago, fecha_primer_pago) values (4, 4, 400, '2024-01-01');
+insert into matriculas_pagos (id_estudiante, id_matricula_grado, primer_pago, fecha_primer_pago) values (5, 5, 500, '2024-01-01');
+insert into matriculas_pagos (id_estudiante, id_matricula_grado, primer_pago, fecha_primer_pago) values (6, 6, 600, '2024-01-01');
+insert into matriculas_pagos (id_estudiante, id_matricula_grado, primer_pago, fecha_primer_pago) values (7, 7, 700, '2024-01-01');
+insert into matriculas_pagos (id_estudiante, id_matricula_grado, primer_pago, fecha_primer_pago) values (8, 8, 800, '2024-01-01');
+insert into matriculas_pagos (id_estudiante, id_matricula_grado, primer_pago, fecha_primer_pago) values (9, 9, 900, '2024-01-01');
+insert into matriculas_pagos (id_estudiante, id_matricula_grado, primer_pago, fecha_primer_pago) values (10, 10, 1000, '2024-01-01');
+
+-- inserciones tabla uniformes
+
+insert into tallas_uniformes (talla) values ('XS');
+insert into tallas_uniformes (talla) values ('S');
+insert into tallas_uniformes (talla) values ('M');
+insert into tallas_uniformes (talla) values ('L');
+insert into tallas_uniformes (talla) values ('XL');
+
+-- inserciones tabla tipo_uniformes
+
+insert into tipos_uniformes (tipo_uniforme) values ('Camisa');
+insert into tipos_uniformes (tipo_uniforme) values ('Pantalón');
+insert into tipos_uniformes (tipo_uniforme) values ('Camisa deportiva');
+insert into tipos_uniformes (tipo_uniforme) values ('Pantalón deportivo');
+
+-- inserciones tabla catalogo_uniformes
+
+insert into catalogo_uniformes (descripcion, id_profesor, id_tipo_uniforme, precio) values ('Camisa blanca', 1, 1, 10);
+insert into catalogo_uniformes (descripcion, id_profesor, id_tipo_uniforme, precio) values ('Pantalón azul', 2, 2, 20);
+insert into catalogo_uniformes (descripcion, id_profesor, id_tipo_uniforme, precio) values ('Camisa deportiva roja', 3, 3, 30);
+insert into catalogo_uniformes (descripcion, id_profesor, id_tipo_uniforme, precio) values ('Pantalón deportivo', 4, 4, 40);
+
+-- inserciones tabla tallas_disponibles
+
+insert into tallas_disponibles (id_uniforme, id_talla, stock) values (1, 1, 10);
+insert into tallas_disponibles (id_uniforme, id_talla, stock) values (2, 2, 20);
+insert into tallas_disponibles (id_uniforme, id_talla, stock) values (3, 3, 30);
+insert into tallas_disponibles (id_uniforme, id_talla, stock) values (4, 4, 40);
