@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS colegioAgazzis;
-CREATE DATABASE IF NOT EXISTS colegioAgazzis DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE colegioAgazzis;
+DROP DATABASE IF EXISTS colegioagazzis;
+CREATE DATABASE IF NOT EXISTS colegioagazzis DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE colegioagazzis;
 
 CREATE TABLE grados (
     id_grado INT PRIMARY KEY AUTO_INCREMENT,
