@@ -1,0 +1,10 @@
+create user colegioagazzis_desarrollador@localhost identified by 'desarrolladorcolegio';
+flush privileges;
+GRANT SELECT, INSERT, UPDATE, DELETE ON colegioagazzis.* TO 'colegioagazzis_desarrollador'@'localhost';
+flush privileges;
+GRANT TRIGGER, CREATE VIEW ON colegioagazzis.* TO 'colegioagazzis_desarrollador'@'localhost';
+flush privileges;
+GRANT EXECUTE on colegioagazzis.* TO 'colegioagazzis_desarrollador'@'localhost';
+flush privileges;
+GRANT CREATE ROUTINE on colegioagazzis.* TO 'colegioagazzis_desarrollador'@'localhost';
+flush privileges;
