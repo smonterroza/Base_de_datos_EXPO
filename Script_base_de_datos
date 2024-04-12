@@ -54,7 +54,7 @@ CREATE TABLE estudiantes (
     estado_estudiante ENUM('Deshabilitado', 'Habilitado') NOT NULL,
     genero ENUM('Masculino', 'Femenino') NOT NULL,
     horario ENUM('Matutino', 'Vespertino') NOT NULL, 
-    tipo_sangre VARCHAR(30) NULL,
+    tipo_sangre ENUM('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-') NULL,
     id_responsable INT NOT NULL,
     id_curso INT NOT NULL,
     CONSTRAINT UNQ_alias_estudiante UNIQUE (alias_estudiante),
@@ -83,7 +83,6 @@ CREATE TABLE roles (
     agregar_catalogo BOOLEAN NOT NULL DEFAULT FALSE
 );
 
-
 CREATE TABLE profesores (
     id_profesor INT PRIMARY KEY AUTO_INCREMENT,
     nombre_profesor VARCHAR(50) NOT NULL,
@@ -93,7 +92,6 @@ CREATE TABLE profesores (
     direccion_profesor VARCHAR(100) NOT NULL, 
     clave_profesor VARCHAR(255) NOT NULL,
     id_rol INT NOT NULL,
-    id_materia INT NOT NULL,
     foto_profesor VARCHAR(80) NULL,
 	 dui_profesor VARCHAR(10) NOT NULL,
 	 CONSTRAINT UNQ_correo_profesor UNIQUE (correo_profesor),
@@ -102,14 +100,22 @@ CREATE TABLE profesores (
 	 CONSTRAINT CHK_dui_profesores CHECK (dui_profesor REGEXP '^[0-9]{8}-[0-9]{1}$'),
     CONSTRAINT CHK_telefono_profesores CHECK (telefono_profesor REGEXP '^[0-9]{8}$'),
     CONSTRAINT CHK_correo_profesores CHECK (correo_profesor REGEXP '^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$'),
-    CONSTRAINT fk_profesores_roles FOREIGN KEY (id_rol) REFERENCES Roles(id_rol),
-    CONSTRAINT fk_profesores_materias FOREIGN KEY (id_materia) REFERENCES materias(id_materia)
+    CONSTRAINT fk_profesores_roles FOREIGN KEY (id_rol) REFERENCES Roles(id_rol)
+);
+
+CREATE TABLE profesores_materias(
+	id_profesor_materia INT PRIMARY KEY AUTO_INCREMENT,
+    id_profesor INT NOT NULL,
+    id_materia INT NOT NULL,
+	CONSTRAINT fk_profesores_materias FOREIGN KEY (id_materia) REFERENCES materias(id_materia),
+    CONSTRAINT fk_materias_profesores FOREIGN KEY (id_profesor) REFERENCES profesores(id_profesor)
 );
 
 CREATE TABLE cursos_profesores (
     id_curso_profesor INT PRIMARY KEY AUTO_INCREMENT,
     id_profesor INT NOT NULL,
     id_curso INT NOT NULL,
+    profesor_guia BOOLEAN NOT NULL,
     CONSTRAINT fk_cursos_profesores_profesores FOREIGN KEY (id_profesor) REFERENCES profesores(id_profesor),
     CONSTRAINT fk_cursos_profesores_cursos FOREIGN KEY (id_curso) REFERENCES cursos(id_curso)
 );
@@ -137,14 +143,14 @@ CREATE TABLE asignaciones (
     fecha_finalizacion DATE NOT NULL,
     id_tipo_asignacion INT NOT NULL,
     id_trimestre INT NOT NULL,
-    id_profesor INT NOT NULL,
-    id_grado INT NOT NULL,
+    id_profesor_materia INT NOT NULL,
+    id_curso INT NOT NULL,
     CONSTRAINT UNQ_nombre_actividad UNIQUE (nombre_actividad),
     CONSTRAINT fk_tbtrimestre_tbactividades FOREIGN KEY (id_trimestre) REFERENCES trimestres(id_trimestre),
-    CONSTRAINT fk_tbprofesor_tbactividades FOREIGN KEY (id_profesor) REFERENCES profesores(id_profesor),
+    CONSTRAINT fk_tbprofesormateria_tbactividades FOREIGN KEY (id_profesor_materia) REFERENCES profesores_materias(id_profesor_materia),
     CONSTRAINT fk_tbtipoasignacion_tbasignacion FOREIGN KEY (id_tipo_asignacion) REFERENCES tipos_asignaciones(id_tipo_asignacion),
-    CONSTRAINT fk_tbgrado_tbactividades FOREIGN KEY (id_grado) REFERENCES grados(id_grado),
-    CONSTRAINT CHK_porcentaje_asignacion CHECK (porcentaje >= 1)
+    CONSTRAINT fk_tbcurso_tbactividades FOREIGN KEY (id_curso) REFERENCES cursos(id_curso),
+    CONSTRAINT CHK_porcentaje_asignacion CHECK (porcentaje >= 1 and porcentaje <=100)
 );
 
 CREATE TABLE notas_asignaciones (
@@ -154,7 +160,7 @@ CREATE TABLE notas_asignaciones (
     nota DECIMAL(2,2) NOT NULL,
     CONSTRAINT fk_tbestudiantes_tbnotasact FOREIGN KEY (id_estudiante) REFERENCES estudiantes(id_estudiante),
     CONSTRAINT fk_tbasignaciones_tbestudiantes FOREIGN KEY (id_asignacion) REFERENCES asignaciones(id_asignacion),
-    CONSTRAINT CHK_nota_asignacion CHECK (nota >= 0)
+    CONSTRAINT CHK_nota_asignacion CHECK (nota >= 0 and nota <= 10)
 );
 
 CREATE TABLE sesiones_clases (
