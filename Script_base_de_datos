@@ -4,7 +4,10 @@ USE colegioagazzis;
 
 CREATE TABLE grados (
     id_grado INT PRIMARY KEY AUTO_INCREMENT,
-    nombre_grado VARCHAR(10) NOT NULL UNIQUE
+    nombre_grado VARCHAR(10) NOT NULL UNIQUE,
+    matricula DECIMAL(5,2) NOT NULL,
+    fecha_vencimiento DATE NOT NULL,
+    CONSTRAINT CHK_matricula_grado CHECK (matricula >= 0)
 );
 
 CREATE TABLE secciones (
@@ -120,13 +123,24 @@ CREATE TABLE cursos_profesores (
     CONSTRAINT fk_cursos_profesores_cursos FOREIGN KEY (id_curso) REFERENCES cursos(id_curso)
 );
 
+
+CREATE TABLE periodos_anuales(
+    id_periodo_anual INT PRIMARY KEY AUTO_INCREMENT,
+    periodo_anual YEAR NOT NULL,
+    mora_anual DECIMAL(4,2) NOT NULL
+);
+
+
 CREATE TABLE trimestres (
     id_trimestre INT PRIMARY KEY AUTO_INCREMENT,
     nombre_trimestre VARCHAR(20) NOT NULL,
     lapso_anual YEAR NOT NULL,
     fecha_inicio DATE NOT NULL,
-    fecha_fin DATE NOT NULL
+    fecha_fin DATE NOT NULL,
+    id_periodo_anual INT NOT NULL,
+    CONSTRAINT FK_periodos_anuales_trimestres FOREIGN KEY (id_periodo_anual) REFERENCES periodos_anuales(id_periodo_anual)
 );
+
 
 CREATE TABLE tipos_asignaciones (
     id_tipo_asignacion INT PRIMARY KEY AUTO_INCREMENT,
@@ -224,19 +238,10 @@ CREATE TABLE cuotas_pagos (
     CONSTRAINT fk_tbcuotasgrado_tbcuotaspagos FOREIGN KEY (id_cuota_grado) REFERENCES cuotas_grados(id_cuota_grado)
 );
 
-CREATE TABLE matriculas_grados(
-    id_matricula_grado INT PRIMARY KEY AUTO_INCREMENT,
-    id_grado INT NOT NULL,
-    matricula DECIMAL(5,2) NOT NULL,
-    fecha_vencimiento DATE NOT NULL,
-    CONSTRAINT fk_tbgrado_tbmatriculasgrado FOREIGN KEY (id_grado) REFERENCES grados(id_grado),
-    CONSTRAINT CHK_matricula_grado CHECK (matricula >= 0)
-);
 
 CREATE TABLE matriculas_pagos(
     id_matricula INT PRIMARY KEY AUTO_INCREMENT,
     id_estudiante INT NOT NULL,
-    id_matricula_grado INT NOT NULL,
     primer_pago DECIMAL(5,2) NOT NULL,
     segundo_pago DECIMAL(5,2) NULL,
     fecha_primer_pago DATE NOT NULL,
@@ -245,8 +250,7 @@ CREATE TABLE matriculas_pagos(
     estado_cargo ENUM ('Con mora', 'Sin mora') NOT NULL DEFAULT 'Sin mora',
     CONSTRAINT CHK_primer_pago_matricula CHECK (primer_pago >= 0),
     CONSTRAINT CHK_segundo_pago_matricula CHECK (segundo_pago >= 0),
-    CONSTRAINT fk_tbestudiantes_tbmatriculaspagos FOREIGN KEY (id_estudiante) REFERENCES estudiantes(id_estudiante),
-    CONSTRAINT fk_tbmatriculasgrado_tbmatriculaspagos FOREIGN KEY (id_matricula_grado) REFERENCES matriculas_grados(id_matricula_grado)
+    CONSTRAINT fk_tbestudiantes_tbmatriculaspagos FOREIGN KEY (id_estudiante) REFERENCES estudiantes(id_estudiante)
 );
 
 CREATE TABLE tallas_uniformes (
