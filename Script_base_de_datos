@@ -59,7 +59,7 @@ CREATE TABLE estudiantes (
     horario ENUM('Matutino', 'Vespertino') NOT NULL, 
     tipo_sangre ENUM('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-') NULL,
     id_responsable INT NOT NULL,
-    id_curso INT NOT NULL,
+    id_curso INT NULL,
     CONSTRAINT UNQ_alias_estudiante UNIQUE (alias_estudiante),
     CONSTRAINT fk_tbcurso_tbestudiante FOREIGN KEY (id_curso) REFERENCES cursos(id_curso),
     CONSTRAINT fk_estudiantes_responsables FOREIGN KEY (id_responsable) REFERENCES responsables_estudiantes(id_responsable)
@@ -96,11 +96,11 @@ CREATE TABLE profesores (
     clave_profesor VARCHAR(255) NOT NULL,
     id_rol INT NOT NULL,
     foto_profesor VARCHAR(80) NULL,
-	 dui_profesor VARCHAR(10) NOT NULL,
-	 CONSTRAINT UNQ_correo_profesor UNIQUE (correo_profesor),
-	 CONSTRAINT UNQ_telefono_profesor UNIQUE (telefono_profesor),
-	 CONSTRAINT UNQ_dui_profesor UNIQUE (dui_profesor),
-	 CONSTRAINT CHK_dui_profesores CHECK (dui_profesor REGEXP '^[0-9]{8}-[0-9]{1}$'),
+	dui_profesor VARCHAR(10) NOT NULL,
+	CONSTRAINT UNQ_correo_profesor UNIQUE (correo_profesor),
+	CONSTRAINT UNQ_telefono_profesor UNIQUE (telefono_profesor),
+	CONSTRAINT UNQ_dui_profesor UNIQUE (dui_profesor),
+	CONSTRAINT CHK_dui_profesores CHECK (dui_profesor REGEXP '^[0-9]{8}-[0-9]{1}$'),
     CONSTRAINT CHK_telefono_profesores CHECK (telefono_profesor REGEXP '^[0-9]{8}$'),
     CONSTRAINT CHK_correo_profesores CHECK (correo_profesor REGEXP '^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$'),
     CONSTRAINT fk_profesores_roles FOREIGN KEY (id_rol) REFERENCES Roles(id_rol)
@@ -238,10 +238,10 @@ CREATE TABLE cuotas_pagos (
     CONSTRAINT fk_tbcuotasgrado_tbcuotaspagos FOREIGN KEY (id_cuota_grado) REFERENCES cuotas_grados(id_cuota_grado)
 );
 
-
 CREATE TABLE matriculas_pagos(
     id_matricula INT PRIMARY KEY AUTO_INCREMENT,
     id_estudiante INT NOT NULL,
+    id_grado INT NOT NULL,
     primer_pago DECIMAL(5,2) NOT NULL,
     segundo_pago DECIMAL(5,2) NULL,
     fecha_primer_pago DATE NOT NULL,
@@ -250,7 +250,8 @@ CREATE TABLE matriculas_pagos(
     estado_cargo ENUM ('Con mora', 'Sin mora') NOT NULL DEFAULT 'Sin mora',
     CONSTRAINT CHK_primer_pago_matricula CHECK (primer_pago >= 0),
     CONSTRAINT CHK_segundo_pago_matricula CHECK (segundo_pago >= 0),
-    CONSTRAINT fk_tbestudiantes_tbmatriculaspagos FOREIGN KEY (id_estudiante) REFERENCES estudiantes(id_estudiante)
+    CONSTRAINT fk_tbestudiantes_tbmatriculaspagos FOREIGN KEY (id_estudiante) REFERENCES estudiantes(id_estudiante),
+    CONSTRAINT fk_tbgrados_tbmatriculaspagos FOREIGN KEY (id_grado) REFERENCES grados(id_grado)
 );
 
 CREATE TABLE tallas_uniformes (
