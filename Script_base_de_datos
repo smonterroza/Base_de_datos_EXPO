@@ -6,8 +6,11 @@ CREATE TABLE grados (
     id_grado INT PRIMARY KEY AUTO_INCREMENT,
     nombre_grado VARCHAR(10) NOT NULL UNIQUE,
     matricula DECIMAL(5,2) NOT NULL,
-    fecha_vencimiento DATE NOT NULL,
-    CONSTRAINT CHK_matricula_grado CHECK (matricula >= 0)
+	cuota DECIMAL(5,2) NOT NULL, 
+    fecha_vencimiento_matricula DATE NOT NULL,
+    fecha_vencimiento_cuota DATE NOT NULL,
+    CONSTRAINT CHK_matricula_grado CHECK (matricula >= 0),
+	CONSTRAINT CHK_cuota_grado CHECK (cuota >= 0)
 );
 
 CREATE TABLE secciones (
@@ -218,24 +221,13 @@ CREATE TABLE faltas_estudiantes (
     CONSTRAINT fk_tbmaestros_faltaestudiante FOREIGN KEY (id_profesor) REFERENCES profesores(id_profesor)
 );
 
-CREATE TABLE cuotas_grados (
-    id_cuota_grado INT PRIMARY KEY AUTO_INCREMENT,
-    id_grado INT NOT NULL,
-    cuota DECIMAL(5,2) NOT NULL,
-    fecha_vencimiento DATE NOT NULL,
-    CONSTRAINT fk_tbgrado_tbcuotasgrado FOREIGN KEY (id_grado) REFERENCES grados(id_grado),
-    CONSTRAINT CHK_cuota_grado CHECK (cuota >= 0)
-);
-
 CREATE TABLE cuotas_pagos (
     id_cuota INT PRIMARY KEY AUTO_INCREMENT,
     id_estudiante INT NOT NULL,
-    id_cuota_grado INT NOT NULL,
     fecha_pago DATE NULL,
     estado_pago ENUM('Pendiente', 'Pagado') NOT NULL DEFAULT 'Pendiente',
     estado_cargo ENUM ('Con mora', 'Sin mora') NOT NULL DEFAULT 'Sin mora',
-    CONSTRAINT fk_tbestudiantes_tbcuotaspagos FOREIGN KEY (id_estudiante) REFERENCES estudiantes(id_estudiante),
-    CONSTRAINT fk_tbcuotasgrado_tbcuotaspagos FOREIGN KEY (id_cuota_grado) REFERENCES cuotas_grados(id_cuota_grado)
+    CONSTRAINT fk_tbestudiantes_tbcuotaspagos FOREIGN KEY (id_estudiante) REFERENCES estudiantes(id_estudiante)
 );
 
 CREATE TABLE matriculas_pagos(
