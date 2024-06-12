@@ -54,10 +54,11 @@ CREATE TABLE estudiantes (
     clave_estudiante VARCHAR(255) NOT NULL,
     nombre_estudiante VARCHAR(50) NOT NULL,
     apellido_estudiante VARCHAR(50) NOT NULL,
+    imagen_estudiante VARCHAR(80) NOT NULL,
     fecha_matriculacion DATE DEFAULT NOW(),
     fecha_nacimiento DATE NOT NULL,
     foto_estudiante VARCHAR(80) NULL,
-    estado_estudiante ENUM('Deshabilitado', 'Habilitado') NOT NULL,
+    estado_estudiante ENUM('Deshabilitado', 'Habilitado') NOT NULL ,
     genero ENUM('Masculino', 'Femenino') NOT NULL,
     horario ENUM('Matutino', 'Vespertino') NOT NULL, 
     tipo_sangre ENUM('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-') NULL,
@@ -91,6 +92,7 @@ CREATE TABLE roles (
 
 CREATE TABLE profesores (
     id_profesor INT PRIMARY KEY AUTO_INCREMENT,
+    alias_profesor VARCHAR(50) NOT NULL,
     nombre_profesor VARCHAR(50) NOT NULL,
     apellido_profesor VARCHAR(50) NOT NULL,
     correo_profesor VARCHAR(100) NOT NULL,
@@ -179,20 +181,35 @@ CREATE TABLE notas_asignaciones (
     CONSTRAINT CHK_nota_asignacion CHECK (nota >= 0 and nota <= 10)
 );
 
-CREATE TABLE sesiones_clases (
-    id_sesion INT PRIMARY KEY AUTO_INCREMENT,
-    id_curso_profesor INT NOT NULL,
-    fecha_hora DATETIME NOT NULL DEFAULT NOW(),
-    CONSTRAINT fk_tbcursosprofesores_tbsesionesclase FOREIGN KEY (id_curso_profesor) REFERENCES cursos_profesores(id_curso_profesor)
+
+CREATE TABLE dias_horarios (
+   id_dia_horario INT PRIMARY KEY AUTO_INCREMENT,
+   dia  ENUM ('Lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo') NOT NULL,
+   tipo_jornada VARCHAR(10)  NOT NULL,
+   inicio_jornada TIME,
+   final_jornada TIME 
 );
+
+CREATE TABLE bloques_clases(
+    id_bloque INT PRIMARY KEY AUTO_INCREMENT,
+	id_profesor INT NOT NULL,
+    id_materia INT NOT NULL, 
+    id_curso INT NOT NULL,
+    id_dia_horario INT NOT NULL,
+    incio_bloque TIME NOT NULL, 
+    final_bloque TIME  NOT NULL,
+	CONSTRAINT fk_tbdiashorarios_tbnotasact FOREIGN KEY (id_dia_horario) REFERENCES dias_horarios(id_dia_horario)
+);
+
+
 
 CREATE TABLE asistencias (
     id_asistencia INT PRIMARY KEY AUTO_INCREMENT,
     id_estudiante INT NOT NULL,
-    id_sesion INT NOT NULL,
+    id_bloque INT NOT NULL,
     asistencia ENUM('Presente', 'Ausente') NOT NULL,
     CONSTRAINT fk_tbestudiantes_tbasistencias FOREIGN KEY (id_estudiante) REFERENCES estudiantes(id_estudiante),
-    CONSTRAINT fk_tbsesionesclase_tbasistencias FOREIGN KEY (id_sesion) REFERENCES sesiones_clases(id_sesion)
+    CONSTRAINT fk_tbbloquesclases_tbasistencias FOREIGN KEY (id_bloque) REFERENCES bloques_clases(id_bloque)
 );
 
 CREATE TABLE tipos_faltas (
