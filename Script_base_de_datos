@@ -111,23 +111,25 @@ CREATE TABLE profesores (
     CONSTRAINT fk_profesores_roles FOREIGN KEY (id_rol) REFERENCES Roles(id_rol)
 );
 
-CREATE TABLE profesores_materias(
-	id_profesor_materia INT PRIMARY KEY AUTO_INCREMENT,
-    id_profesor INT NOT NULL,
-    id_materia INT NOT NULL,
-	CONSTRAINT fk_profesores_materias FOREIGN KEY (id_materia) REFERENCES materias(id_materia),
-    CONSTRAINT fk_materias_profesores FOREIGN KEY (id_profesor) REFERENCES profesores(id_profesor)
-);
-
 CREATE TABLE cursos_profesores (
     id_curso_profesor INT PRIMARY KEY AUTO_INCREMENT,
     id_profesor INT NOT NULL,
     id_curso INT NOT NULL,
     profesor_guia BOOLEAN NOT NULL,
-    CONSTRAINT fk_cursos_profesores_profesores FOREIGN KEY (id_profesor) REFERENCES profesores(id_profesor),
-    CONSTRAINT fk_cursos_profesores_cursos FOREIGN KEY (id_curso) REFERENCES cursos(id_curso)
+    CONSTRAINT fk_cursos_profesores_profesores FOREIGN KEY (id_profesor)
+        REFERENCES profesores (id_profesor),
+    CONSTRAINT fk_cursos_profesores_cursos FOREIGN KEY (id_curso)
+        REFERENCES cursos (id_curso)
 );
 
+CREATE TABLE profesores_materias(
+	id_profesor_materia INT PRIMARY KEY AUTO_INCREMENT,
+    id_curso_profesor INT NOT NULL,
+    id_materia INT NOT NULL,
+    materia_principal BOOLEAN NOT NULL,
+	CONSTRAINT fk_profesores_materias FOREIGN KEY (id_materia) REFERENCES materias(id_materia),
+    CONSTRAINT fk_materias_curso_profesores FOREIGN KEY (id_curso_profesor) REFERENCES cursos_profesores(id_curso_profesor)
+);
 
 CREATE TABLE periodos_anuales(
     id_periodo_anual INT PRIMARY KEY AUTO_INCREMENT,
@@ -281,6 +283,7 @@ CREATE TABLE catalogos_uniformes (
     id_uniforme INT PRIMARY KEY AUTO_INCREMENT,
     nombre_uniforme varchar(50) NOT NULL,
     descripcion varchar(200) NOT NULL,
+    foto VARCHAR (100) NOT NULL,
     id_profesor INT NOT NULL,
     id_tipo_uniforme INT NOT NULL,
     precio DECIMAL(8,2) NOT NULL,
