@@ -208,6 +208,7 @@ CREATE TABLE asistencias (
     id_estudiante INT NOT NULL,
     id_bloque INT NOT NULL,
     asistencia ENUM('Presente', 'Ausente') NOT NULL,
+    justificacion_asistencia ENUM('Justificado', 'Injustificado') NULL,
     CONSTRAINT fk_tbestudiantes_tbasistencias FOREIGN KEY (id_estudiante) REFERENCES estudiantes(id_estudiante),
     CONSTRAINT fk_tbbloquesclases_tbasistencias FOREIGN KEY (id_bloque) REFERENCES bloques_clases(id_bloque)
 );
