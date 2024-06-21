@@ -287,7 +287,9 @@ CREATE TABLE catalogos_uniformes (
     id_profesor INT NOT NULL,
     id_tipo_uniforme INT NOT NULL,
     precio DECIMAL(8,2) NOT NULL,
+    existencias INT NOT NULL,
     CONSTRAINT CHK_precio_catalogo CHECK (precio >= 0),
+    CONSTRAINT CHK_exitencias_catalogo CHECK (existencias >= 0),
     CONSTRAINT fk_tbprofesores_catalogo FOREIGN KEY (id_profesor) REFERENCES profesores(id_profesor),
     CONSTRAINT fk_tbtiposuniformes_tbcatalogouniformes FOREIGN KEY (id_tipo_uniforme) REFERENCES tipos_uniformes(id_tipo_uniforme)
 );
