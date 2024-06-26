@@ -57,7 +57,6 @@ CREATE TABLE estudiantes (
     imagen_estudiante VARCHAR(80) NOT NULL,
     fecha_matriculacion DATE DEFAULT NOW(),
     fecha_nacimiento DATE NOT NULL,
-    foto_estudiante VARCHAR(80) NULL,
     estado_estudiante ENUM('Deshabilitado', 'Habilitado') NOT NULL ,
     genero ENUM('Masculino', 'Femenino') NOT NULL,
     horario ENUM('Matutino', 'Vespertino') NOT NULL, 
