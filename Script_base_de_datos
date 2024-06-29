@@ -219,7 +219,7 @@ CREATE TABLE asistencias (
 CREATE TABLE tipos_faltas (
     id_categoria_falta INT PRIMARY KEY AUTO_INCREMENT,
     tipo_falta VARCHAR(50) NOT NULL,
-    ponderacion DECIMAL(2,2) NOT NULL,
+    ponderacion DECIMAL(8,2) NOT NULL,
     CONSTRAINT CHK_ponderacion_falta CHECK (ponderacion >= 0 and ponderacion <= 10)
 );
 
