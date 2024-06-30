@@ -237,7 +237,7 @@ CREATE TABLE faltas_estudiantes (
     id_profesor INT NOT NULL,
     id_falta INT NOT NULL,
     fecha_falta DATETIME DEFAULT NOW(),
-    observacion VARCHAR(50) NOT NULL,
+    observacion VARCHAR(150) NULL,
     CONSTRAINT fk_tbestudiantes_faltaestudiante FOREIGN KEY (id_estudiante) REFERENCES estudiantes(id_estudiante),
     CONSTRAINT fk_tbfaltas_faltaestudiante FOREIGN KEY (id_falta) REFERENCES faltas(id_falta),
     CONSTRAINT fk_tbmaestros_faltaestudiante FOREIGN KEY (id_profesor) REFERENCES profesores(id_profesor)
