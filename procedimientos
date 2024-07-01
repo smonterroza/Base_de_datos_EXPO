@@ -1,0 +1,73 @@
+USE colegioagazzis;
+
+DROP PROCEDURE IF EXISTS eliminarEstudiante;
+DROP PROCEDURE IF EXISTS eliminarProfesor;
+
+DELIMITER //
+
+CREATE PROCEDURE eliminarEstudiante(IN student_id INT)
+BEGIN
+    DECLARE responsable_id INT;
+
+    -- Obtener el id_responsable antes de eliminar el estudiante
+    SELECT id_responsable INTO responsable_id FROM estudiantes WHERE id_estudiante = student_id;
+
+    -- Iniciar una transacción
+    START TRANSACTION;
+
+    -- Eliminar registros relacionados
+    DELETE FROM notas_asignaciones WHERE id_estudiante = student_id;
+    DELETE FROM asistencias WHERE id_estudiante = student_id;
+    DELETE FROM faltas_estudiantes WHERE id_estudiante = student_id;
+    DELETE FROM cuotas_pagos WHERE id_estudiante = student_id;
+    DELETE FROM matriculas_pagos WHERE id_estudiante = student_id;
+
+    -- Eliminar el registro del estudiante
+    DELETE FROM estudiantes WHERE id_estudiante = student_id;
+
+    -- Eliminar el registro del responsable
+    DELETE FROM responsables_estudiantes WHERE id_responsable = responsable_id;
+
+    -- Confirmar la transacción
+    COMMIT;
+END //
+
+DELIMITER ;
+
+
+------------------------------------------------------------------------------------------------
+
+DELIMITER //
+
+CREATE PROCEDURE eliminarProfesor(IN profesor_id INT)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        -- En caso de error, revertir la transacción
+        ROLLBACK;
+    END;
+    
+    -- Iniciar transacción
+    START TRANSACTION;
+    
+    -- Eliminar de profesores_materias
+    DELETE pm
+    FROM profesores_materias pm
+    INNER JOIN cursos_profesores cp ON pm.id_curso_profesor = cp.id_curso_profesor
+    WHERE cp.id_profesor = profesor_id;
+
+    -- Eliminar de cursos_profesores
+    DELETE FROM cursos_profesores
+    WHERE id_profesor = profesor_id;
+
+    -- Eliminar de profesores
+    DELETE FROM profesores
+    WHERE id_profesor = profesor_id;
+
+    -- Confirmar transacción
+    COMMIT;
+END //
+
+DELIMITER ;
+
+
