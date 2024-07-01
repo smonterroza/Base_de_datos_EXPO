@@ -160,6 +160,7 @@ CREATE TABLE asignaciones (
     nombre_actividad VARCHAR(100) NOT NULL,
     descripcion varchar(200) NULL, 
     porcentaje INT NOT NULL,
+    estado_asignacion ENUM('Activo' , 'Desactivo') DEFAULT 'Activo',
     fecha_inicio DATE NOT NULL,
     fecha_finalizacion DATE NOT NULL,
     id_tipo_asignacion INT NOT NULL,
