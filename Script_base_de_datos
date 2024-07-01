@@ -43,8 +43,7 @@ CREATE TABLE responsables_estudiantes (
     parentesco ENUM('Padre', 'Madre', 'Otro') NOT NULL,
     CONSTRAINT UNQ_telefono_responsable UNIQUE (telefono_responsable),
     CONSTRAINT UNQ_correo_responsable UNIQUE (correo_responsable),
-    CONSTRAINT CHK_telefono_responsables CHECK (telefono_responsable REGEXP '^[0-9]{8}$'),
-    CONSTRAINT CHK_telefono_responsables_estudiantes CHECK (LENGTH(telefono_responsable) = 8),
+    CONSTRAINT CHK_telefono_responsables_estudiantes CHECK (telefono_responsable REGEXP '^[0-9]{4}-[0-9]{4}$',
     CONSTRAINT CHK_correo_responsables_estudiantes CHECK (correo_responsable REGEXP '^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$')
 );
 
@@ -63,6 +62,7 @@ CREATE TABLE estudiantes (
     tipo_sangre ENUM('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-') NULL,
     id_responsable INT NOT NULL,
     id_curso INT NULL,
+    nie_estudiante VARCHAR (10) NOT NULL,
     CONSTRAINT UNQ_alias_estudiante UNIQUE (alias_estudiante),
     CONSTRAINT fk_tbcurso_tbestudiante FOREIGN KEY (id_curso) REFERENCES cursos(id_curso),
     CONSTRAINT fk_estudiantes_responsables FOREIGN KEY (id_responsable) REFERENCES responsables_estudiantes(id_responsable)
