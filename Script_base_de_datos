@@ -259,7 +259,7 @@ CREATE TABLE matriculas_pagos(
     id_grado INT NOT NULL,
     primer_pago DECIMAL(5,2) NOT NULL,
     segundo_pago DECIMAL(5,2) NULL,
-    fecha_primer_pago DATE NOT NULL,
+    fecha_primer_pago DATE NULL,
     fecha_segundo_pago DATE NULL,
     estado_pago ENUM('Pendiente', 'Pagado') NOT NULL DEFAULT 'Pendiente',
     estado_cargo ENUM ('Con mora', 'Sin mora') NOT NULL DEFAULT 'Sin mora',
