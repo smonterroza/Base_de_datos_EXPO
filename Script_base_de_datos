@@ -43,7 +43,7 @@ CREATE TABLE responsables_estudiantes (
     parentesco ENUM('Padre', 'Madre', 'Otro') NOT NULL,
     CONSTRAINT UNQ_telefono_responsable UNIQUE (telefono_responsable),
     CONSTRAINT UNQ_correo_responsable UNIQUE (correo_responsable),
-    CONSTRAINT CHK_telefono_responsables_estudiantes CHECK (telefono_responsable REGEXP '^[0-9]{4}-[0-9]{4}$',
+    CONSTRAINT CHK_telefono_responsables_estudiantes CHECK (telefono_responsable REGEXP '^[0-9]{4}-[0-9]{4}$'),
     CONSTRAINT CHK_correo_responsables_estudiantes CHECK (correo_responsable REGEXP '^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$')
 );
 
@@ -90,6 +90,7 @@ CREATE TABLE roles (
     agregar_catalogo BOOLEAN NOT NULL DEFAULT FALSE
 );
 
+
 CREATE TABLE profesores (
     id_profesor INT PRIMARY KEY AUTO_INCREMENT,
     alias_profesor VARCHAR(50) NOT NULL,
@@ -126,9 +127,8 @@ CREATE TABLE profesores_materias(
 	id_profesor_materia INT PRIMARY KEY AUTO_INCREMENT,
     id_curso_profesor INT NOT NULL,
     id_materia INT NOT NULL,
-    materia_principal BOOLEAN NOT NULL,
 	CONSTRAINT fk_profesores_materias FOREIGN KEY (id_materia) REFERENCES materias(id_materia),
-    CONSTRAINT fk_materias_curso_profesores FOREIGN KEY (id_curso_profesor) REFERENCES cursos_profesores(id_curso_profesor)
+    CONSTRAINT fk_materias_profesores FOREIGN KEY (id_curso_profesor) REFERENCES cursos_profesores(id_curso_profesor)
 );
 
 CREATE TABLE periodos_anuales(
@@ -203,7 +203,6 @@ CREATE TABLE bloques_clases(
     final_bloque TIME  NOT NULL,
 	CONSTRAINT fk_tbdiashorarios_tbnotasact FOREIGN KEY (id_dia_horario) REFERENCES dias_horarios(id_dia_horario)
 );
-
 
 
 CREATE TABLE asistencias (
