@@ -10,7 +10,8 @@ CREATE TABLE grados (
     fecha_vencimiento_matricula DATE NOT NULL,
     fecha_vencimiento_cuota DATE NOT NULL,
     CONSTRAINT CHK_matricula_grado CHECK (matricula >= 0),
-	CONSTRAINT CHK_cuota_grado CHECK (cuota >= 0)
+	CONSTRAINT CHK_cuota_grado CHECK (cuota >= 0),
+    CONSTRAINT CHK_matricula_cuota CHECK (matricula >= cuota)
 );
 
 
