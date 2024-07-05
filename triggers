@@ -1,0 +1,62 @@
+USE colegioagazzis2;
+
+DROP TRIGGER IF EXISTS despues_estudiante_insert;
+DROP TRIGGER IF EXISTS actulizar_fecha_pagos_matricula;
+
+
+DELIMITER //
+
+CREATE TRIGGER despues_estudiante_insert
+AFTER INSERT ON estudiantes
+FOR EACH ROW
+BEGIN
+    DECLARE curso_grado INT;
+    DECLARE i INT DEFAULT 1;
+    DECLARE payment_date DATE;
+    DECLARE base_date DATE DEFAULT DATE(CONCAT(YEAR(NOW()), '-01-01'));  -- Fecha base para el año actual, enero 1
+
+    -- Obtener el id_grado del curso asociado
+    SELECT id_grado INTO curso_grado
+    FROM cursos
+    WHERE id_curso = NEW.id_curso;
+    
+    -- Insertar en matriculas_pagos el registro inicial
+    INSERT INTO matriculas_pagos (id_estudiante, id_grado, primer_pago, segundo_pago, fecha_primer_pago, fecha_segundo_pago, estado_pago, estado_cargo)
+    VALUES (NEW.id_estudiante, curso_grado, 0.00, NULL, NULL, NULL, 'Pendiente', 'Sin mora');
+    
+    -- Insertar 12 registros en cuotas_pagos para los pagos mensuales
+    WHILE i <= 12 DO
+        SET payment_date = DATE_ADD(base_date, INTERVAL (i-1) MONTH);
+        INSERT INTO cuotas_pagos (id_estudiante, fecha_pago, estado_pago, estado_cargo)
+        VALUES (NEW.id_estudiante, payment_date, 'Pendiente', 'Sin mora');
+        SET i = i + 1;
+    END WHILE;
+END //
+
+DELIMITER ;
+
+
+
+DELIMITER //
+
+CREATE TRIGGER actulizar_fecha_pagos_matricula
+BEFORE UPDATE ON matriculas_pagos
+FOR EACH ROW
+BEGIN
+    -- Check if primer_pago is being updated
+    IF NEW.primer_pago <> OLD.primer_pago THEN
+        SET NEW.fecha_primer_pago = NOW();
+    END IF;
+
+    -- Check if segundo_pago is being updated
+    IF NEW.segundo_pago <> OLD.segundo_pago THEN
+        SET NEW.fecha_segundo_pago = NOW();
+    END IF;
+END //
+
+DELIMITER ;
+
+SHOW TRIGGERS LIKE 'despues_estudiante_insert';
+SHOW TRIGGERS LIKE 'actulizar_fecha_pagos_matricula';
+
+
