@@ -210,18 +210,18 @@ CREATE TABLE asistencias (
 
 
 CREATE TABLE tipos_faltas (
-    id_categoria_falta INT PRIMARY KEY AUTO_INCREMENT,
-    categoria ENUM('Leve', 'Grave', 'Muy Grave') NOT NULL,
-    ponderacion DECIMAL(2,2) NOT NULL,
+    id_tipo_falta INT PRIMARY KEY AUTO_INCREMENT,
+    tipo_falta VARCHAR(50) NOT NULL,
+    ponderacion DECIMAL(8,2) NOT NULL,
     CONSTRAINT CHK_ponderacion_falta CHECK (ponderacion >= 0 and ponderacion <= 10)
 );
 
 CREATE TABLE faltas (
     id_falta INT PRIMARY KEY AUTO_INCREMENT,
-    id_categoria_falta INT NOT NULL,
+    id_tipo_falta INT NOT NULL,
     nombre_falta VARCHAR(100) NOT NULL,
     CONSTRAINT UNQ_nombre_falta UNIQUE (nombre_falta),
-    CONSTRAINT fk_tipo_falta_categoria FOREIGN KEY (id_categoria_falta) REFERENCES tipos_faltas(id_categoria_falta)
+    CONSTRAINT fk_tipo_falta_categoria FOREIGN KEY (id_tipo_falta) REFERENCES tipos_faltas(id_tipo_falta)
 );
 
 CREATE TABLE faltas_estudiantes (
@@ -230,6 +230,7 @@ CREATE TABLE faltas_estudiantes (
     id_profesor INT NOT NULL,
     id_falta INT NOT NULL,
     fecha_falta DATETIME DEFAULT NOW(),
+    observacion VARCHAR(150) NULL,
     CONSTRAINT fk_tbestudiantes_faltaestudiante FOREIGN KEY (id_estudiante) REFERENCES estudiantes(id_estudiante),
     CONSTRAINT fk_tbfaltas_faltaestudiante FOREIGN KEY (id_falta) REFERENCES faltas(id_falta),
     CONSTRAINT fk_tbmaestros_faltaestudiante FOREIGN KEY (id_profesor) REFERENCES profesores(id_profesor)
