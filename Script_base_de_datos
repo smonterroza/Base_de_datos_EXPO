@@ -40,11 +40,14 @@ CREATE TABLE responsables_estudiantes (
     nombre_responsable VARCHAR(50) NOT NULL,
     apellido_responsable VARCHAR(50) NOT NULL,
     telefono_responsable VARCHAR(9) NOT NULL,
+    dui_responsable VARCHAR(10),
     direccion_responsable VARCHAR(100) NOT NULL,
     correo_responsable VARCHAR(100) NOT NULL,
     parentesco ENUM('Padre', 'Madre', 'Otro') NOT NULL,
     CONSTRAINT UNQ_telefono_responsable UNIQUE (telefono_responsable),
     CONSTRAINT UNQ_correo_responsable UNIQUE (correo_responsable),
+	CONSTRAINT CHK_telefono_responsable CHECK (telefono_responsable REGEXP '^[0-9]{4}-?[0-9]{4}$'),
+    CONSTRAINT CHK_dui_responsable CHECk (dui_responsable REGEXP '^[0-9]{8}-?[0-9]{1}$'),
     CONSTRAINT CHK_correo_responsables_estudiantes CHECK (correo_responsable REGEXP '^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$')
 );
 
