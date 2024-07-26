@@ -82,6 +82,7 @@ CREATE TABLE roles (
     agregar_asignaciones BOOLEAN NOT NULL DEFAULT FALSE,
     agregar_asistencias BOOLEAN NOT NULL DEFAULT FALSE,
     agregar_faltas BOOLEAN NOT NULL DEFAULT FALSE,
+    asignar_faltas BOOLEAN NOT NULL DEFAULT FALSE,
     gestionar_faltas BOOLEAN NOT NULL DEFAULT FALSE,
     agregar_uniformes BOOLEAN NOT NULL DEFAULT FALSE,
     agregar_cuotas BOOLEAN NOT NULL DEFAULT FALSE,
